@@ -1,4 +1,3 @@
-"use client"
 import {
   ClerkLoading,
   SignedIn,
@@ -7,19 +6,17 @@ import {
   useAuth,
   UserButton,
   UserProfile,
-  useUser,
 } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 
 export default async function Home() {
-  const userr=useUser();
-  console.log("userrr=->",userr)
-
+const user= await  currentUser();
+console.log("user",user)
 
   return (
   <div>
-    <h1>Hello Vik</h1>
+    
   </div>)
   
 }
