@@ -1,9 +1,11 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
+import userCreate from '@/actions/user.action'
+import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
-
+  console.log("userData")
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET
 
@@ -16,7 +18,7 @@ export async function POST(req: Request) {
   const svix_id = headerPayload.get("svix-id");
   const svix_timestamp = headerPayload.get("svix-timestamp");
   const svix_signature = headerPayload.get("svix-signature");
-
+ 
   // If there are no headers, error out
   if (!svix_id || !svix_timestamp || !svix_signature) {
     return new Response('Error occured -- no svix headers', {
@@ -50,7 +52,28 @@ export async function POST(req: Request) {
   // Do something with the payload
   // For this guide, you simply log the payload to the console
   const { id } = evt.data;
+  console.log("userData",evt.data)
   const eventType = evt.type;
+
+  if(eventType==="user.created"){
+    const {image_url,first_name,last_name,email_addresses,username}=evt.data;
+    const user={
+      clerkId:id!,
+      avatar:image_url,
+      firstName:first_name,
+      lastName:last_name,
+      email:email_addresses[0].email_address!,
+      username:username!
+    }
+    console.log("user",user)
+    const newUser=await userCreate(user)
+  
+  return NextResponse.json({
+    message:"New User Created",
+    user:newUser
+  })
+
+}
   console.log(`Webhook with and ID of ${id} and type of ${eventType}`)
   console.log('Webhook body:', body)
 

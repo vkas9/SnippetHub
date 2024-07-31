@@ -8,6 +8,10 @@ const userSchema=new Schema({
         required:true,
         unique:true
     },
+    username:{
+        type:String,
+        required:true
+    },
     email:{
         type:String,
         required:true
@@ -19,7 +23,7 @@ const userSchema=new Schema({
     lastName:{
         type:String
     },
-    fullName:{
+    avatar:{
         type:String
     }
 },{timestamps:true})
