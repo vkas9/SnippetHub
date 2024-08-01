@@ -3,7 +3,7 @@ import React from 'react'
 
 const Signup = () => {
   return (
-    <div>
+    <div className='mx-auto mt-6'>
       <SignUp/>
     </div>
   )

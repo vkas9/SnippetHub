@@ -25,9 +25,9 @@ export default function RootLayout({
 
           <div className="flex flex-col h-screen">
             <Navbar />
-            <main className=" flex items-center justify-center p-4">
+           
               {children}
-            </main>
+            
           </div>
           </ClerkLoaded>
         </body>

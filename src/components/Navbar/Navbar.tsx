@@ -7,7 +7,7 @@ import { FaArrowRight } from "react-icons/fa6";
 
 const Navbar = () => {
   return (
-    <div className=' w-full max-w-[1536px]  rounded-b-md flex items-center h-[45px] sm:h-[60px] justify-between py-2 pl-4 pr-4 bg-blue-950 mx-auto'>
+    <div className='  w-full  rounded-b-md flex items-center h-[45px] sm:h-[60px] justify-between py-2 pl-4 pr-4 bg-blue-950 mx-auto'>
         {/* Home */}
         <Link href={"/"}>
         <div className='flex   text-lg sm:text-2xl items-center'>

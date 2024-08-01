@@ -3,7 +3,7 @@ import React from 'react'
 
 const Signin = () => {
   return (
-    <div className='mx-auto'>
+    <div className='mx-auto mt-6'>
       <SignIn/>
     </div>
   )
