@@ -1,6 +1,7 @@
-import User from "@/models/User";
-import { connectDB } from "@/db";
-const userCreate=async(user:any)=>{
+import { connectDB } from "@/lib/mongodb";
+import User from "@/models/user.model";
+
+export default async function createUser(user:any){
     try {
         await connectDB();
         const newUser = await User.create(user);
@@ -9,4 +10,3 @@ const userCreate=async(user:any)=>{
         console.log(error);
       }
 }
-export default userCreate;
