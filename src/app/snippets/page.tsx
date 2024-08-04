@@ -1,4 +1,5 @@
 
+import SnippetArea from '@/components/content/snippetArea';
 import Sidebar from '@/components/Sidebar/Sidebar'
 import { auth } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation';
@@ -12,8 +13,10 @@ const page = () => {
     redirect("/user/sign-in")
   }
   return (
-    <div className=' w-full h-screen ' >
+    <div className=' w-full flex  h-screen ' >
      <Sidebar/>
+     <SnippetArea/>
+
     </div>
   )
 }
