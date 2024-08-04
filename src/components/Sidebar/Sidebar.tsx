@@ -1,11 +1,14 @@
+"use client"
 import React from 'react'
 
 import QuickLink from './QuickLink'
 import Languages from './Languages'
+import { useAppSelector } from '@/lib/store/hooks'
 const Sidebar = () => {
+  const isVisible=useAppSelector(state=>state.quicklink.OpenClose)
   
   return (
-    <div className='w-[180px] max-sm:hidden h-full p-3 flex flex-col pt-7 bg-gradient-to-b from-[#030836] to-transparent  gap-5 border-r border-white/10'>
+    <div className={  `w-[200px] ${!isVisible?"max-sm:hidden":""} h-full p-3 flex flex-col pt-7 bg-gradient-to-b from-[#030836] to-transparent  gap-5 border-r border-white/10`}>
       <div>
         <h1 className='text-white/50 font-semibold '>
             Quick Links

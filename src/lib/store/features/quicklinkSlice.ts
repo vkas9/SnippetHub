@@ -10,11 +10,14 @@ import React from "react";
 }
 
 export interface QuickLink {
-  items:link[]
+  items:link[],
+  OpenClose:boolean
+
   }
 
 const initialState: QuickLink = {
-  items:quicklinks
+  items:quicklinks,
+  OpenClose:false
 }
 
 const quickLinkSlice=createSlice({
@@ -27,6 +30,9 @@ const quickLinkSlice=createSlice({
             item.id === id ? {...item, isSelected: true } : { ...item, isSelected: false }
           );
             
+        },
+        setOpenClose:(state,action)=>{
+          state.OpenClose= action.payload
         }
     }
 })

@@ -5,13 +5,14 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { FaArrowRight } from "react-icons/fa6";
 import SearchBar from "../searchBar/searchBar";
 import AddSnippet from "../searchBar/addSnippet";
+import OpenCloseSidebar from "./OpenCloseSidebar";
 
 const Navbar = () => {
   return (
     <div className="  w-full   flex items-center h-[45px] sm:h-[60px] justify-between py-2 pl-2 sm:pl-6 pr-4 bg-[#030836] mx-auto">
       {/* Home */}
       <div className=" flex items-center gap-2 ">
-        <GiHamburgerMenu className="sm:hidden" size={25} />
+       <OpenCloseSidebar/>
         <Link href={"/"}>
           <div className="flex   text-lg sm:text-2xl items-center">
             <span className="font-bold ">Snippet</span>
