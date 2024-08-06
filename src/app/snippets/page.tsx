@@ -14,8 +14,14 @@ const page = () => {
   }
   return (
     <div className=' w-full flex  h-screen ' >
+      
+
      <Sidebar/>
+     
+    
+
      <SnippetArea/>
+     
 
     </div>
   )
