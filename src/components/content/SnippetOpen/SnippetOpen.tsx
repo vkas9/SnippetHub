@@ -22,7 +22,7 @@ const SnippetOpen = () => {
             dispatch(quickLinkAction.setSnippetData([...snippetData, singleSnippet]));
             dispatch(quickLinkAction.setIsNewSnippet(false));
         }
-    }, [singleSnippet, isNewSnippet, snippetData, dispatch]);
+    }, [singleSnippet]);
 
     return (
         <div className={`${isSnippetOpen ? "w-[60%]" : ""}`}>

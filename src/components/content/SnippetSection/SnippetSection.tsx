@@ -45,7 +45,7 @@ const SnippetSection = () => {
                 onClick={() => handleSnippetOpen(item)}
                 className="font-bold truncate w-full hover:text-red-500 text-2xl hover:cursor-pointer"
               >
-                {item.title}
+                {item?.title}
               </span>
               {item.isFavorite ? (
                 <FaHeart  className="text-red-500" onClick={() => handleFavorite(item)} size={25} />
