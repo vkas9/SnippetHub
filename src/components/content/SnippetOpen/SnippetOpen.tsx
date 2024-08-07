@@ -306,6 +306,7 @@ export const Language = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
       <ul className=" flex flex-col gap-2 overflow-y-auto ">
         {languages.map((item) => (
           <li
+          key={item.id}
             onClick={() => onLanguageUpdate(item.title.toLowerCase())}
             className="hover:bg-white/10 "
           >
