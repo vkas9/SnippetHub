@@ -65,8 +65,8 @@ const SnippetSection = () => {
 
             {/* tags list */}
             <div className="flex mt-3 items-center truncate gap-1">
-              {item.tags.map((tagitem) => (
-                <span className=" bg-white/10 rounded-md px-3 text-white/60  ">
+              {item.tags.map((tagitem,index) => (
+                <span key={index} className=" bg-white/10 rounded-md px-3 text-white/60  ">
                   tagitem
                 </span>
               ))}
