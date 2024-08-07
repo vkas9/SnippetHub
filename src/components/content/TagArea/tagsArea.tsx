@@ -1,4 +1,5 @@
 "use client";
+import { useAppSelector } from "@/lib/store/hooks";
 import React from "react";
 // Import Swiper React components
 
@@ -9,6 +10,8 @@ import { FreeMode } from "swiper/modules";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 const TagsArea = () => {
+
+ const {AllTags}= useAppSelector(state=>state.quicklink)
   return (
     <div className="flex items-center w-full  gap-3 pr-3 bg-white/10  rounded-xl">
       <div className="w-full flex items-center p-2 overflow-x-auto h-fit">
@@ -19,25 +22,13 @@ const TagsArea = () => {
           modules={[FreeMode]}
           className="mySwiper  rounded-lg "
         >
-          <SwiperSlide className=" hover:bg-white/20 ">vikas</SwiperSlide>
-          <SwiperSlide>Slide 2</SwiperSlide>
-          <SwiperSlide>Slide 3</SwiperSlide>
-          <SwiperSlide>Slide 4</SwiperSlide>
-          <SwiperSlide>Slide 5</SwiperSlide>
-          <SwiperSlide>Slide 5</SwiperSlide>
-          <SwiperSlide>Slide 5</SwiperSlide>
-          <SwiperSlide>Slide 5</SwiperSlide>
-          <SwiperSlide>Slide 5</SwiperSlide>
-          <SwiperSlide>Slide 5</SwiperSlide>
-          <SwiperSlide>Slide 5</SwiperSlide>
-          <SwiperSlide>Slide 5</SwiperSlide>
-          <SwiperSlide>Slide 5</SwiperSlide>
-          <SwiperSlide>Slide 5</SwiperSlide>
-          <SwiperSlide>Slide 5</SwiperSlide>
-          <SwiperSlide>Slide 6</SwiperSlide>
-          <SwiperSlide>Slide 7</SwiperSlide>
-          <SwiperSlide>Slide 8</SwiperSlide>
-          <SwiperSlide>Slide 9</SwiperSlide>
+          {
+            AllTags.map((item,index)=>
+              <SwiperSlide className=" hover:bg-white/20 ">{item.name}</SwiperSlide>
+          )
+          }
+          
+         
         </Swiper>
       </div>
 

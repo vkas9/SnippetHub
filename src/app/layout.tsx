@@ -29,7 +29,7 @@ export default function RootLayout({
         <body className={inter.className}>
 
           <ClerkLoading>
-            <div className="h-screen w-screen flex items-center justify-center">Loading...</div>
+            <div className="h-screen w-screen flex text-xl items-center justify-center "><span className="animate-pulse ">Loading...</span></div>
           </ClerkLoading>
           <ClerkLoaded>
 

@@ -1,12 +1,13 @@
 "use client";
 import { quickLinkAction } from "@/lib/store/features/quicklinkSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { IoLogoJavascript } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import { SnippetType } from "@/Types/type.snippetData";
+import Editor from "@monaco-editor/react";
 
 const SnippetSection = () => {
   const { isSnippetOpen: isOpen, snippetData } = useAppSelector(
@@ -20,15 +21,18 @@ const SnippetSection = () => {
       }
       return snippet;
     });
-    
+
     dispatch(quickLinkAction.setSnippetData(updatedSnippetData));
   };
 
-  const handleSnippetOpen=(item:SnippetType)=>{
-    dispatch(quickLinkAction.setSnippetOpen(true))
-    dispatch(quickLinkAction.setSelectedSnippet(item))
-    
-    
+  const handleSnippetOpen = (item: SnippetType) => {
+    dispatch(quickLinkAction.setSnippetOpen(true));
+    dispatch(quickLinkAction.setSelectedSnippet(item));
+  };
+  const editorRef = useRef(null);
+
+  function handleEditorDidMount(editor: any, monaco: any) {
+    editorRef.current = editor;
   }
   return (
     <div className="  flex flex-wrap gap-2">
@@ -48,13 +52,13 @@ const SnippetSection = () => {
                 {item?.title}
               </span>
               {item.isFavorite ? (
-                <FaHeart  className="text-red-500" onClick={() => handleFavorite(item)} size={25} />
-              ) : (
-                <FaRegHeart
+                <FaHeart
+                  className="text-red-500"
                   onClick={() => handleFavorite(item)}
-                 
                   size={25}
                 />
+              ) : (
+                <FaRegHeart onClick={() => handleFavorite(item)} size={25} />
               )}
             </div>
 
@@ -65,17 +69,30 @@ const SnippetSection = () => {
 
             {/* tags list */}
             <div className="flex mt-3 items-center truncate gap-1">
-              {item.tags.map((tagitem,index) => (
-                <span key={index} className=" bg-white/10 rounded-md px-3 text-white/60  ">
-                  tagitem
+              {item.tags.map((tagitem, index) => (
+                <span
+                  key={index}
+                  className=" bg-white/10 rounded-md px-3 text-white/60  "
+                >
+                  {tagitem.name}
                 </span>
               ))}
             </div>
 
             {/* code block */}
 
-            <div className=" mt-4 h-[100px] bg-white/[.03] p-1    rounded-md  ">
-              <p className="overflow-hidden h-full "> {item.code}</p>
+            <div className=" mt-4  bg-white/[.03] p-1    rounded-md  ">
+              <p className="overflow-hidden h-full ">
+                {" "}
+                <Editor
+                  height="200px"
+                  theme="vs-dark"
+                  options={{ readOnly: true,minimap:{ enabled: false } }}
+                  defaultLanguage="javascript"
+                  defaultValue={item.code}
+                 
+                />
+              </p>
             </div>
           </div>
           {/* footer */}

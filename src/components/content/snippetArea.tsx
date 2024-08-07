@@ -10,7 +10,7 @@ const SnippetArea = () => {
     (state) => state.quicklink
   );
   return (
-    <div className=" flex w-full sm:w-[calc(100vw-200px)] p-2 gap-2 ">
+    <div className=" flex w-full sm:w-[calc(100vw-200px)]  p-2 gap-2 ">
       <div
         className={`${
           isOpen ? `${isMobileView ? "w-full" : "w-[40%]"}` : "w-full"
