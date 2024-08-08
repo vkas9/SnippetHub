@@ -10,11 +10,11 @@ const SnippetArea = () => {
     (state) => state.quicklink
   );
   return (
-    <div className=" flex w-full sm:w-[calc(100vw-200px)]  p-2 gap-2 ">
+    <div className=" flex w-full sm:w-[calc(100vw-200px)]  py-2 pl-2   gap-2 ">
       <div
         className={`${
           isOpen ? `${isMobileView ? "w-full" : "w-[40%]"}` : "w-full"
-        }  flex flex-col gap-2`}
+        }  flex flex-col h-[calc(100vh-76px)] rounded-md overflow-y-auto gap-2`}
       >
         <TagsArea />
 

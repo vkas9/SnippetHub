@@ -33,7 +33,7 @@ const Navbar = () => {
       <SignedIn>
         <div className=" flex  gap-2 sm:gap-4 items-center ">
           <Link
-            href={"/snippets"}
+            href={"/snippets/all-snippets"}
             className="bg-white/10 max-sm:hidden  flex items-center group gap-3 active:bg-white/20 sm:hover:bg-white/20 transition-all duration-100 py-1 sm:py-2 px-4 sm:px-6 rounded-md font-bold text-md "
           >
             <span>My Snippets</span>

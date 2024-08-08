@@ -1,7 +1,7 @@
 "use client";
 import { quickLinkAction } from "@/lib/store/features/quicklinkSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { IoLogoJavascript } from "react-icons/io5";
@@ -10,7 +10,7 @@ import { SnippetType } from "@/Types/type.snippetData";
 import Editor from "@monaco-editor/react";
 
 const SnippetSection = () => {
-  const { isSnippetOpen: isOpen, snippetData } = useAppSelector(
+  const { isSnippetOpen: isOpen, snippetData ,isSnippetOpen,selectedSnippet} = useAppSelector(
     (state) => state.quicklink
   );
   const dispatch = useAppDispatch();
@@ -34,9 +34,57 @@ const SnippetSection = () => {
   function handleEditorDidMount(editor: any, monaco: any) {
     editorRef.current = editor;
   }
+
+  const filtererdAllSnippets=snippetData?.filter((item)=>item?.isTrashed===false)
+
+
+  useEffect(()=>{
+    const filtererdAllSnippets=snippetData?.filter((snippet)=>{
+      return(
+
+        snippet?.code.trim()!== ``|| snippet?.title.trim()!==""||snippet?.description.trim()!==""
+      )
+     
+
+
+    })
+    dispatch(quickLinkAction.setSnippetData(filtererdAllSnippets));
+
+
+
+  },[isOpen]);
+ 
+
+
+
+
+
+const handleTrash=(id:string)=>{
+  const updatedSnippetData=snippetData?.map((item)=>{
+    if(item?.id===id){
+      return {...item,isTrashed:!item?.isTrashed};
+    }
+    return item;
+  })
+  dispatch(quickLinkAction.setSnippetData(updatedSnippetData));
+
+  if(selectedSnippet?.id===id){
+    dispatch(quickLinkAction.setSnippetOpen(false));
+              dispatch(quickLinkAction.setIsNewSnippet(false));
+  }
+
+
+
+}
+
+
+
+
+
+
   return (
     <div className="  flex flex-wrap gap-2">
-      {[...snippetData].reverse().map((item, index) => (
+      {[...filtererdAllSnippets].reverse().map((item, index) => (
         <div
           key={item.id}
           className={`max-sm:w-full ${
@@ -88,8 +136,9 @@ const SnippetSection = () => {
                   height="200px"
                   theme="vs-dark"
                   options={{ readOnly: true,minimap:{ enabled: false } }}
-                  defaultLanguage="javascript"
-                  defaultValue={item.code}
+                  language={item?.language.title.toLowerCase()}
+                  value={item?.code}
+                  
                  
                 />
               </p>
@@ -99,10 +148,10 @@ const SnippetSection = () => {
 
           <div className="flex mt-8 items-center justify-between">
             <div className="flex text-white/20 text-sm capitalize items-center gap-1">
-              <IoLogoJavascript />
-              {item.language}
+             <item.language.icon/>
+              {item?.language.title}
             </div>
-            <span className="sm:hover:text-red-500 active:text-red-500 active:bg-white/10 sm:hover:bg-white/10 p-2 rounded-full transition-all duration-100">
+            <span onClick={()=>handleTrash(item.id)} className="sm:hover:text-red-500 active:text-red-500 active:bg-white/10 sm:hover:bg-white/10 p-2 rounded-full transition-all duration-100">
               <FaTrash />
             </span>
           </div>

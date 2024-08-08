@@ -3,37 +3,38 @@ import { FaJava } from "react-icons/fa";
 import { FaGolang } from "react-icons/fa6";
 import { FaPython } from "react-icons/fa";
 import { IoLogoJavascript } from "react-icons/io5";
+import { languageType } from "@/Types/type.snippetData";
 
-export const languages = [
+export const languages:languageType[] = [
   {
-    id: 1,
+    id: "1",
     title: "Java",
-    icon: <FaJava />,
+    icon: FaJava,
     isSelected: false
     
   },
   {
-    id: 2,
+    id: "2",
     title: "Python",
-    icon: <FaPython />,
+    icon: FaPython,
     isSelected: false
   },
   {
-    id: 3,
+    id: "3",
     title: "JavaScript",
-    icon: <IoLogoJavascript />,
+    icon: IoLogoJavascript,
     isSelected: false
   },
   {
-    id: 4,
+    id: "4",
     title: "Scala",
-    icon: <SiScala />,
+    icon: SiScala,
     isSelected: false
   },
   {
-    id: 5,
+    id: "5",
     title: "Go",
-    icon: <FaGolang />,
+    icon: FaGolang,
     isSelected: false
   },
 ];

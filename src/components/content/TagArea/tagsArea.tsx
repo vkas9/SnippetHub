@@ -24,7 +24,7 @@ const TagsArea = () => {
         >
           {
             AllTags.map((item,index)=>
-              <SwiperSlide className=" hover:bg-white/20 ">{item.name}</SwiperSlide>
+              <SwiperSlide key={item._id} className=" hover:bg-white/20 ">{item.name}</SwiperSlide>
           )
           }
           

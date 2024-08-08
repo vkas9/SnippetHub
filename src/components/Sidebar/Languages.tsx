@@ -20,7 +20,7 @@ const Languages = () => {
                   <div onClick={()=>handleLink(item.id)} className={`flex  items-center gap-1 hover:bg-white/10 ${item.isSelected?"bg-white/10":""} justify-between z p-2 rounded-md`}>
                                 <div className='flex items-center gap-2 '>
 
-                                {item.icon}                                
+                                <item.icon/>                                
                                 <span>{item.title}</span>
                                 </div>
                                 <span className='text-white/30 text-sm'>{index+1}</span>

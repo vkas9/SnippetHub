@@ -1,29 +1,10 @@
 import { quicklinks } from "@/constants/quicklinks";
-import { SnippetType, tagType } from "@/Types/type.snippetData";
+import { languageType, link, QuickLink, SnippetType, tagType } from "@/Types/type.snippetData";
 import { createSlice } from "@reduxjs/toolkit";
 import {snippetData} from "../../../../src/constants/SnippetData"
 import {Tags} from "../../../../src/constants/Tags"
-import React from "react";
 
- export interface link{
-  id: string;
-  isSelected: boolean;
-  title: string;
-  icon: React.ReactNode;
-}
 
-export interface QuickLink {
-  items:link[],
-  OpenClose:boolean,
-  isSnippetOpen:boolean,
-  AllTags:tagType[],
-  isMobileView:boolean,
-  snippetData:SnippetType[],
-  selectedSnippet:SnippetType|null,
-  isNewSnippet:boolean,
-  
-
-  }
 
 const initialState: QuickLink = {
   items:quicklinks,
@@ -33,7 +14,8 @@ const initialState: QuickLink = {
   AllTags:Tags,
   snippetData:snippetData,
   selectedSnippet:null,
-  isNewSnippet:false
+  isNewSnippet:false,
+  singleLanguageSelected:null
 
 
 }
@@ -69,6 +51,9 @@ const quickLinkSlice=createSlice({
         },
         setAllTag:(state,action)=>{
           state.AllTags=[{_id:String(state.AllTags.length+1),name:action.payload},...state.AllTags]
+        },
+        setSingleLanguageSelected:(state,action)=>{
+          state.singleLanguageSelected=action.payload
         }
     }
 })

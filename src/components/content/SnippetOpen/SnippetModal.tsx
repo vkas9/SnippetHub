@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { quickLinkAction } from '@/lib/store/features/quicklinkSlice';
 import { useAppDispatch } from '@/lib/store/hooks';
 import React, { useEffect, useCallback } from 'react';
@@ -11,7 +11,7 @@ const SnippetModal = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        handleResize();
+        handleResize(); 
         window.addEventListener("resize", handleResize);
         
         return () => {
@@ -21,7 +21,7 @@ const SnippetModal = () => {
 
     return (
         <div>
-        
+           
         </div>
     );
 };

@@ -3,7 +3,7 @@ import { quickLinkAction } from "@/lib/store/features/quicklinkSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import React, { useEffect, useRef, useState } from "react";
 import SnippetModal from "./SnippetModal";
-import { SnippetType, tagType } from "@/Types/type.snippetData";
+import { languageType, SnippetType, tagType } from "@/Types/type.snippetData";
 import { IoMdClose } from "react-icons/io";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Editor } from "@monaco-editor/react";
@@ -21,35 +21,42 @@ const SnippetOpen = () => {
   } = useAppSelector((state) => state.quicklink);
   const dispatch = useAppDispatch();
   const [singleSnippet, setSingleSnippet] = useState<SnippetType | null>(null);
-
+console.log("selectedSnippet->",selectedSnippet,"snippetData",snippetData,"isSnippetOpen",isSnippetOpen)
   useEffect(() => {
     if (isSnippetOpen && selectedSnippet) {
+
       setSingleSnippet(selectedSnippet);
     }
   }, [selectedSnippet, isSnippetOpen]);
 
   useEffect(() => {
-    if (isNewSnippet && singleSnippet?.title !== "") {
+    if (isNewSnippet &&singleSnippet&& singleSnippet?.title !== "") {
+   
       dispatch(quickLinkAction.setSnippetData([...snippetData, singleSnippet]));
       dispatch(quickLinkAction.setIsNewSnippet(false));
     }
   }, [singleSnippet]);
 
   return (
-    <div className={`${isSnippetOpen ? "w-[60%]" : ""}`}>
+    <div className={ `${
+      isSnippetOpen ? `${isMobileView ? "" : "w-[60%]"}` : ""
+    } `}>
       <div
         className={`${
           isSnippetOpen && isMobileView
-            ? "bg-black/90 z-10 w-screen absolute top-0 left-0 h-screen"
-            : ""
-        }`}
-      ></div>
+            ? "bg-black/90  z-10 w-screen absolute top-0 left-0 h-screen"
+            : " "
+        }  `}
+      >
+
+        
+      </div>
       <SnippetModal />
       <div
         className={`p-3 rounded-lg ${
           isMobileView
             ? "absolute w-[90%] z-20 bg-white/10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-            : "h-full w-full bg-white/10"
+            : " overflow-y-auto h-[calc(100vh-76px)]  w-full bg-white/10"
         } ${isSnippetOpen ? "block" : "hidden"}`}
       >
         {singleSnippet && (
@@ -80,17 +87,16 @@ export const SnippetHeader = ({
 
   const onUpdateTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newSingleSnippet = { ...singleSnippet, title: event.target.value };
+    
+    console.log('newSingleSnippet',newSingleSnippet)
+    // Dispatch action to update the snippet data in the store
+    dispatch(quickLinkAction.setSnippetData(
+      snippetData.map(item =>
+        item?.id === singleSnippet?.id ? newSingleSnippet : item
+      )
+    ));
     setSingleSnippet(newSingleSnippet);
-
-    const newAllSnippets = snippetData.map((item) => {
-      if (item.id === singleSnippet.id) {
-        return newSingleSnippet;
-      }
-      return item;
-    });
-    dispatch(quickLinkAction.setSnippetData(newAllSnippets));
   };
-
   const languageRef = useRef<HTMLDivElement>(null);
   const handleClickOutside = (event: MouseEvent) => {
     if (
@@ -114,7 +120,7 @@ export const SnippetHeader = ({
 
   return (
     <>
-      <div className="flex flex-col gap-5  sm:text-2xl justify-between">
+      <div className="flex flex-col gap-5  text-xl  justify-between">
         <div className="flex gap-2 justify-between items-center">
           <div className="flex items-center gap-3 ">
             <span className="font-bold">Title: </span>
@@ -123,7 +129,7 @@ export const SnippetHeader = ({
               onChange={onUpdateTitle}
               placeholder="New Title..."
               value={singleSnippet.title}
-              className="outline-none bg-white/10 max-sm:w-full p-2 rounded-md"
+              className="outline-none bg-white/10 max-sm:w-full w-full p-2 rounded-md"
             />
           </div>
 
@@ -154,7 +160,7 @@ export const SnippetHeader = ({
             <div ref={languageRef} className="">
               <AiOutlinePlus
                 onClick={() => setTagMenuOpen(!isTagMenuOpen)}
-                className="bg-white/10 rounded-md animate-pulse hover:animate-none hover:cursor-pointer w-8 h-8 "
+                className="bg-white/10 rounded-md animate-pulse hover:animate-none hover:cursor-pointer w-7 h-7 "
               />
               {isTagMenuOpen && <TagMenu singleSnippet={singleSnippet} />}
             </div>
@@ -179,7 +185,7 @@ export const TagMenu = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
       tags: [newTag, ...singleSnippet.tags],
     };
     const newSnippetData = snippetData.map((item) => {
-      if (item.id === singleSnippet.id) {
+      if (item?.id === singleSnippet?.id) {
         return updatedSnippet;
       }
       return item;
@@ -190,7 +196,7 @@ export const TagMenu = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
   };
 
   return (
-    <ul className="absolute top-10 bg-black z-20 flex flex-col gap-2 w-[30%]  py-3 px-6 h-[200px] overflow-y-auto rounded-md ">
+    <ul className="absolute top-10 bg-[#393a3b] z-20 flex flex-col gap-2 w-[30%]  py-3 px-6 h-[200px] overflow-y-auto rounded-md ">
       {AllTags.map((item) => (
         <li
           onClick={() => {
@@ -239,6 +245,9 @@ export const Code = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
       setLanguageModalOpen(false);
     }
   };
+  const { snippetData } = useAppSelector(
+    (state) => state.quicklink
+  );
   useEffect(() => {
     if (isLanguageModalOpen) {
       window.addEventListener("click", handleClickOutside);
@@ -250,7 +259,24 @@ export const Code = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
       window.removeEventListener("click", handleClickOutside);
     };
   }, [isLanguageModalOpen]);
+  const dispatch=useAppDispatch()
 
+  const handleChange=(code:any)=>{
+    const newCodeSnippet={...singleSnippet,code:code}
+    const updatedSnippet=snippetData.map((item)=>{
+
+      if(item.id===singleSnippet.id){
+        return newCodeSnippet;
+      }
+      return item;
+    })
+
+    dispatch(quickLinkAction.setSelectedSnippet(newCodeSnippet));
+    dispatch(quickLinkAction.setSnippetData(updatedSnippet));
+
+
+
+  }
   return (
     <div className=" flex gap-2 flex-col">
       <div className="flex gap-2">
@@ -263,7 +289,10 @@ export const Code = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
           className=" relative hover:bg-white/20 w-[180px] flex items-center bg-white/10 p-1 rounded-md justify-between px-2 hover:cursor-pointer "
           ref={languageRef}
         >
-          <span  className="capitalize ">{singleSnippet.language}</span>
+          <div className="flex items-center gap-1">
+          <span><singleSnippet.language.icon/></span>
+          <span  className="capitalize ">{singleSnippet.language.title}</span>
+          </div>
           {!isLanguageModalOpen ? (
             <MdKeyboardArrowDown   />
           ) : (
@@ -274,11 +303,12 @@ export const Code = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
       </div>
 
       <Editor
-        className="bg-white/10 outline-none max-sm:w-full  h-[200px] p-2 rounded-md"
+        onChange={handleChange}
+        className="bg-white/10 outline-none max-sm:w-full  h-[300px] p-2 rounded-md"
         theme="vs-dark"
         options={{ readOnly: false, minimap: { enabled: false } }}
-        defaultLanguage={singleSnippet.language.toLowerCase()}
-        defaultValue={singleSnippet.code}
+        language={singleSnippet?.language?.title?.toLowerCase()}
+        value={singleSnippet.code}
       />
     </div>
   );
@@ -287,7 +317,7 @@ export const Code = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
 export const Language = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
   const { snippetData } = useAppSelector((state) => state.quicklink);
   const dispatch = useAppDispatch();
-  const onLanguageUpdate = (newLanguage: string) => {
+  const onLanguageUpdate = (newLanguage: languageType) => {
     const updatedSnippet = { ...singleSnippet, language: newLanguage };
     const newSnippetData = snippetData.map((item) => {
       if (item.id === singleSnippet.id) {
@@ -307,10 +337,11 @@ export const Language = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
         {languages.map((item) => (
           <li
           key={item.id}
-            onClick={() => onLanguageUpdate(item.title.toLowerCase())}
-            className="hover:bg-white/10 "
+            onClick={() => onLanguageUpdate(item)}
+            className={`hover:bg-white/20 ${singleSnippet.language.title.toLowerCase()===item.title.toLowerCase()?"text-white/20 pointer-events-none select-none":""} flex items-center gap-1 p-2 `}
           >
-            {item.title}
+              <item.icon/>
+            {item?.title}
           </li>
         ))}
       </ul>

@@ -1,16 +1,12 @@
 import { languages } from "@/constants/languages";
+import { languageType } from "@/Types/type.snippetData";
 import { createSlice } from "@reduxjs/toolkit";
 import React from "react";
 
- export interface link{
-  id: number;
-  isSelected: boolean;
-  title: string;
-  icon: React.ReactNode;
-}
+
 
 export interface language {
-  items:link[]
+  items:languageType[]
   }
 
 const initialState: language = {

@@ -13,15 +13,10 @@ const page = () => {
     redirect("/user/sign-in")
   }
   return (
-    <div className=' w-full flex  h-screen ' >
+    <div className=' ' >
       
 
-     <Sidebar/>
-     
     
-
-     <SnippetArea/>
-     
 
     </div>
   )
