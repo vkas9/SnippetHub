@@ -5,7 +5,7 @@ import { useAppSelector } from '@/lib/store/hooks';
 import React from 'react'
 import EmptyFavoritesMessage from './EmptyFavoritesMessage';
 
-const page = () => {
+const FavoritesPage = () => {
   const { isSnippetOpen: isOpen, isMobileView,snippetData } = useAppSelector(
     
 
@@ -36,4 +36,4 @@ const page = () => {
   )
 }
 
-export default page
+export default FavoritesPage

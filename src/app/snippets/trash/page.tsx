@@ -6,7 +6,7 @@ import React from 'react'
 
 import { useAppSelector } from '@/lib/store/hooks';
 import EmptyTrashMessage from './EmptyTrashMessage';
-const page = () => {
+const TrashPage = () => {
   const { isSnippetOpen: isOpen, isMobileView,snippetData } = useAppSelector(
     
 
@@ -34,4 +34,4 @@ const page = () => {
   )
 }
 
-export default page
+export default TrashPage;

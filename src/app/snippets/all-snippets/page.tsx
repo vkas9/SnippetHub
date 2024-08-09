@@ -1,7 +1,7 @@
 import SnippetArea from '@/components/content/snippetArea'
 import React from 'react'
 
-const page = () => {
+const AllSnippetsPage = () => {
   return (
     <>
     <SnippetArea/>    
@@ -9,4 +9,4 @@ const page = () => {
   )
 }
 
-export default page
+export default AllSnippetsPage

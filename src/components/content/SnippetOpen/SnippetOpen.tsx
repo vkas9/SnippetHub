@@ -30,12 +30,12 @@ const SnippetOpen = () => {
   }, [selectedSnippet, isSnippetOpen]);
 
   useEffect(() => {
-    if (isNewSnippet &&singleSnippet&& singleSnippet?.title !== "") {
+    if (isNewSnippet &&singleSnippet&& singleSnippet?.title?.trim() !== "") {
    
       dispatch(quickLinkAction.setSnippetData([...snippetData, singleSnippet]));
       dispatch(quickLinkAction.setIsNewSnippet(false));
     }
-  }, [singleSnippet]);
+  }, [singleSnippet, isNewSnippet, snippetData, dispatch]);
 
   return (
     <div className={ `${

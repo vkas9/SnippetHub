@@ -70,7 +70,7 @@ const SnippetSection = () => {
     else if(items[2].isSelected){
       setFiltererdAllSnippets(snippetData.filter((item) => item?.isTrashed))
     }
-  }, [snippetData]);
+  }, [items,snippetData]);
 
   
   useEffect(() => {
@@ -83,7 +83,7 @@ const SnippetSection = () => {
     } else if (items[2].isSelected) {
       setFiltererdAllSnippets(snippetData.filter((item) => item?.isTrashed));
     }
-  }, [items]);
+  }, [items,snippetData]);
 
   const handleTrash = (id: string) => {
     const updatedSnippetData = snippetData?.map((item) => {
