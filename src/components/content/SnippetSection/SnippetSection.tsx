@@ -8,11 +8,16 @@ import { IoLogoJavascript } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import { SnippetType } from "@/Types/type.snippetData";
 import Editor from "@monaco-editor/react";
+import { FaTrashRestore } from "react-icons/fa";
 
 const SnippetSection = () => {
-  const { isSnippetOpen: isOpen, snippetData ,isSnippetOpen,selectedSnippet} = useAppSelector(
-    (state) => state.quicklink
-  );
+  const {
+    isSnippetOpen: isOpen,
+    snippetData,
+    isSnippetOpen,
+    selectedSnippet,
+    items,
+  } = useAppSelector((state) => state.quicklink);
   const dispatch = useAppDispatch();
   const handleFavorite = (item: SnippetType) => {
     const updatedSnippetData: SnippetType[] = snippetData.map((snippet) => {
@@ -34,53 +39,66 @@ const SnippetSection = () => {
   function handleEditorDidMount(editor: any, monaco: any) {
     editorRef.current = editor;
   }
+  const [filtererdAllSnippets, setFiltererdAllSnippets] = useState(
+    snippetData?.filter((item) => item?.isTrashed === false)
+  );
 
-  const filtererdAllSnippets=snippetData?.filter((item)=>item?.isTrashed===false)
-
-
-  useEffect(()=>{
-    const filtererdAllSnippets=snippetData?.filter((snippet)=>{
-      return(
-
-        snippet?.code.trim()!== ``|| snippet?.title.trim()!==""||snippet?.description.trim()!==""
-      )
-     
-
-
-    })
+  useEffect(() => {
+    const filtererdAllSnippets = snippetData?.filter((snippet) => {
+      return (
+        snippet?.code.trim() !== `` ||
+        snippet?.title.trim() !== "" ||
+        snippet?.description.trim() !== ""
+      );
+    });
     dispatch(quickLinkAction.setSnippetData(filtererdAllSnippets));
+  }, [isOpen]);
 
 
+  useEffect(() => {
+    if (items[1].isSelected) {
+      setFiltererdAllSnippets(
+        snippetData.filter(
+          (item) => item?.isFavorite && item?.isTrashed === false
+        )
+      );
+    } else if (items[0].isSelected) {
+      setFiltererdAllSnippets(snippetData.filter((item) => !item?.isTrashed));
 
-  },[isOpen]);
- 
 
-
-
-
-
-const handleTrash=(id:string)=>{
-  const updatedSnippetData=snippetData?.map((item)=>{
-    if(item?.id===id){
-      return {...item,isTrashed:!item?.isTrashed};
     }
-    return item;
-  })
-  dispatch(quickLinkAction.setSnippetData(updatedSnippetData));
+    else if(items[2].isSelected){
+      setFiltererdAllSnippets(snippetData.filter((item) => item?.isTrashed))
+    }
+  }, [snippetData]);
 
-  if(selectedSnippet?.id===id){
-    dispatch(quickLinkAction.setSnippetOpen(false));
-              dispatch(quickLinkAction.setIsNewSnippet(false));
-  }
+  
+  useEffect(() => {
+    if (items[1].isSelected) {
+      setFiltererdAllSnippets(
+        snippetData.filter(
+          (item) => item?.isFavorite && item?.isTrashed === false
+        )
+      );
+    } else if (items[2].isSelected) {
+      setFiltererdAllSnippets(snippetData.filter((item) => item?.isTrashed));
+    }
+  }, [items]);
 
+  const handleTrash = (id: string) => {
+    const updatedSnippetData = snippetData?.map((item) => {
+      if (item?.id === id) {
+        return { ...item, isTrashed: !item?.isTrashed };
+      }
+      return item;
+    });
+    dispatch(quickLinkAction.setSnippetData(updatedSnippetData));
 
-
-}
-
-
-
-
-
+    if (selectedSnippet?.id === id) {
+      dispatch(quickLinkAction.setSnippetOpen(false));
+      dispatch(quickLinkAction.setIsNewSnippet(false));
+    }
+  };
 
   return (
     <div className="  flex flex-wrap gap-2">
@@ -88,7 +106,7 @@ const handleTrash=(id:string)=>{
         <div
           key={item.id}
           className={`max-sm:w-full ${
-            isOpen ? "w-full" : "w-[320px]"
+            isOpen && items[0]?.isSelected ? "w-full" : "w-[320px]"
           }  p-2 flex flex-col justify-between max-h-[500px]  bg-white/10 rounded-lg`}
         >
           <div>
@@ -117,7 +135,7 @@ const handleTrash=(id:string)=>{
 
             {/* tags list */}
             <div className="flex mt-3 items-center truncate gap-1">
-              {item.tags.map((tagitem, index) => (
+              {item?.tags.map((tagitem, index) => (
                 <span
                   key={index}
                   className=" bg-white/10 rounded-md px-3 text-white/60  "
@@ -135,11 +153,9 @@ const handleTrash=(id:string)=>{
                 <Editor
                   height="200px"
                   theme="vs-dark"
-                  options={{ readOnly: true,minimap:{ enabled: false } }}
+                  options={{ readOnly: true, minimap: { enabled: false } }}
                   language={item?.language.title.toLowerCase()}
                   value={item?.code}
-                  
-                 
                 />
               </p>
             </div>
@@ -148,11 +164,14 @@ const handleTrash=(id:string)=>{
 
           <div className="flex mt-8 items-center justify-between">
             <div className="flex text-white/20 text-sm capitalize items-center gap-1">
-             <item.language.icon/>
+              <item.language.icon />
               {item?.language.title}
             </div>
-            <span onClick={()=>handleTrash(item.id)} className="sm:hover:text-red-500 active:text-red-500 active:bg-white/10 sm:hover:bg-white/10 p-2 rounded-full transition-all duration-100">
-              <FaTrash />
+            <span
+              onClick={() => handleTrash(item.id)}
+              className={ `${item?.isTrashed?"sm:hover:text-green-500 active:text-green-500":"sm:hover:text-red-500 active:text-red-500"}  active:bg-white/10 sm:hover:bg-white/10 p-2 rounded-full transition-all duration-100`}
+            >
+              {item?.isTrashed ? <FaTrashRestore /> : <FaTrash />}
             </span>
           </div>
         </div>

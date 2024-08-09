@@ -21,7 +21,7 @@ const SnippetOpen = () => {
   } = useAppSelector((state) => state.quicklink);
   const dispatch = useAppDispatch();
   const [singleSnippet, setSingleSnippet] = useState<SnippetType | null>(null);
-console.log("selectedSnippet->",selectedSnippet,"snippetData",snippetData,"isSnippetOpen",isSnippetOpen)
+
   useEffect(() => {
     if (isSnippetOpen && selectedSnippet) {
 
@@ -88,7 +88,7 @@ export const SnippetHeader = ({
   const onUpdateTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newSingleSnippet = { ...singleSnippet, title: event.target.value };
     
-    console.log('newSingleSnippet',newSingleSnippet)
+
     // Dispatch action to update the snippet data in the store
     dispatch(quickLinkAction.setSnippetData(
       snippetData.map(item =>
@@ -325,7 +325,7 @@ export const Language = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
       }
       return item;
     });
-    console.log("updatedSnippet", updatedSnippet);
+
 
     dispatch(quickLinkAction.setSelectedSnippet(updatedSnippet));
     dispatch(quickLinkAction.setSnippetData(newSnippetData));

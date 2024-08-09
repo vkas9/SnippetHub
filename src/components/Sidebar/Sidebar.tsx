@@ -8,7 +8,7 @@ const Sidebar = () => {
   const isVisible=useAppSelector(state=>state.quicklink.OpenClose)
   
   return (
-    <div className={  `w-[200px] ${!isVisible?"max-sm:hidden":""} h-full p-3 flex flex-col pt-7 bg-gradient-to-b from-[#030836] to-transparent  gap-5 border-r border-white/10`}>
+    <div className={  `w-[200px] ${!isVisible?"max-sm:hidden":""} h-full p-3 flex flex-col pt-7 bg-gradient-to-b from-[#030836] to-transparent  gap-5`}>
       <div>
         <h1 className='text-white/50 font-semibold '>
             Quick Links
@@ -17,7 +17,7 @@ const Sidebar = () => {
             <ul className='flex flex-col gap-1'>
 
 
-               <QuickLink/>
+            <QuickLink/>
                 
             </ul>
         </div>

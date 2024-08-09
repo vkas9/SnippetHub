@@ -12,7 +12,7 @@ const Navbar = () => {
     <div className="  w-full   flex items-center h-[45px] sm:h-[60px] justify-between py-2 pl-2 sm:pl-6 pr-4 bg-[#030836] mx-auto">
       {/* Home */}
       <div className=" flex items-center gap-2 ">
-       <OpenCloseSidebar/>
+      <OpenCloseSidebar/>
         <Link href={"/"}>
           <div className="flex   text-lg sm:text-2xl items-center">
             <span className="font-bold ">Snippet</span>
@@ -32,7 +32,7 @@ const Navbar = () => {
 
       <SignedIn>
         <div className=" flex  gap-2 sm:gap-4 items-center ">
-          <Link
+          <Link   
             href={"/snippets/all-snippets"}
             className="bg-white/10 max-sm:hidden  flex items-center group gap-3 active:bg-white/20 sm:hover:bg-white/20 transition-all duration-100 py-1 sm:py-2 px-4 sm:px-6 rounded-md font-bold text-md "
           >

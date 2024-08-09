@@ -16,8 +16,8 @@ const Languages = () => {
     <>
      {
               items.map((item,index)=>{
-                return <Link key={index} href={"/snippets"}>
-                  <div onClick={()=>handleLink(item.id)} className={`flex  items-center gap-1 hover:bg-white/10 ${item.isSelected?"bg-white/10":""} justify-between z p-2 rounded-md`}>
+                return <Link key={item?.id} href={"/snippets/all-snippets"}>
+                  <div onClick={()=>handleLink(item.id)} className={`flex items-center gap-1 hover:bg-white/10 ${item.isSelected?"bg-white/10":""} justify-between z p-2 rounded-md`}>
                                 <div className='flex items-center gap-2 '>
 
                                 <item.icon/>                                
