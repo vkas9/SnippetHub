@@ -5,7 +5,6 @@ export interface SnippetType{
     title:string;
     isFavorite:boolean;
     tags:tagType[];
-    description:string;
     code:string;
     language:languageType;
     createdAt:string;

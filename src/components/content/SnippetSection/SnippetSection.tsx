@@ -24,6 +24,7 @@ const SnippetSection = () => {
     selectedSnippet,
     items,
   } = useAppSelector((state) => state.quicklink);
+
   const dispatch = useAppDispatch();
   const handleFavorite = (item: SnippetType) => {
     const updatedSnippetData: SnippetType[] = snippetData.map((snippet) => {
@@ -53,8 +54,7 @@ const SnippetSection = () => {
     const filtererdAllSnippets = snippetData?.filter((snippet) => {
       return (
         snippet?.code.trim() !== `` ||
-        snippet?.title.trim() !== "" ||
-        snippet?.description.trim() !== ""
+        snippet?.title.trim() !== ""
       );
     });
     dispatch(quickLinkAction.setSnippetData(filtererdAllSnippets));
@@ -92,20 +92,17 @@ const SnippetSection = () => {
   }, [items,snippetData]);
 
   const handleTrash = (id: string) => {
-    const updatedSnippetData = snippetData?.map((item) => {
-      if (item?.id === id) {
-        return { ...item, isTrashed: !item?.isTrashed };
-      }
-      return item;
-    });
+    const updatedSnippetData = snippetData.map((item) => 
+      item?.id === id ? { ...item, isTrashed: !item.isTrashed } : item
+    );
     dispatch(quickLinkAction.setSnippetData(updatedSnippetData));
-
+  
     if (selectedSnippet?.id === id) {
       dispatch(quickLinkAction.setSnippetOpen(false));
       dispatch(quickLinkAction.setIsNewSnippet(false));
     }
   };
-
+  
   return (
     <div className="  flex flex-wrap gap-2">
       {[...filtererdAllSnippets].reverse().map((item, index) => (
@@ -198,7 +195,7 @@ const SnippetSection = () => {
               onClick={() => handleTrash(item.id)}
               className={ `${item?.isTrashed?"sm:hover:text-green-500 active:text-green-500":"sm:hover:text-red-500 active:text-red-500"}  active:bg-white/10 sm:hover:bg-white/10 p-2 rounded-full transition-all duration-100`}
             >
-              {item?.isTrashed ? <FaTrashRestore className="sm:hover:animate-bounce " /> : <FaTrash className="sm:hover:animate-bounce " />}
+              {item?.isTrashed ? <FaTrashRestore className=" " /> : <FaTrash className=" " />}
             </span>
           </div>
         </div>

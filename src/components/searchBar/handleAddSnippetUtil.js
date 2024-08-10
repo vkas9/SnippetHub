@@ -1,7 +1,7 @@
 import { FaJava } from "react-icons/fa";
 import formatDate from "../content/SnippetSection/formatDate";
 import { quickLinkAction } from "@/lib/store/features/quicklinkSlice";
-
+import { v4 as uuidv4 } from 'uuid';
 export const handleAddSnippet = async (dispatch, router, snippetData) => {
   // Navigate first
   await dispatch(quickLinkAction.setQuickLink("1"));
@@ -9,7 +9,7 @@ export const handleAddSnippet = async (dispatch, router, snippetData) => {
 
   // Then dispatch actions
   const newSingleSnippet = {
-    id: String(snippetData.length + 1),
+    id: uuidv4(),
     title: "",
     isFavorite: false,
     tags: [],

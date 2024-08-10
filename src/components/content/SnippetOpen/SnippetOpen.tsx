@@ -41,7 +41,7 @@ const SnippetOpen = () => {
       dispatch(quickLinkAction.setSnippetData([...snippetData, singleSnippet]));
       dispatch(quickLinkAction.setIsNewSnippet(false));
     }
-  }, [singleSnippet, isNewSnippet, snippetData, dispatch]);
+  }, [singleSnippet]);
 
   return (
     <div className={ `${
@@ -150,6 +150,8 @@ export const SnippetHeader = ({
             onClick={() => {
               dispatch(quickLinkAction.setSnippetOpen(!isSnippetOpen));
               dispatch(quickLinkAction.setIsNewSnippet(false));
+              
+
             }}
           >
             <IoMdClose size={25} />
