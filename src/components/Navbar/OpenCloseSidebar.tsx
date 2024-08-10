@@ -13,7 +13,7 @@ const OpenCloseSidebar = () => {
     }
   return (
     <>
-
+   
     {
 
         !check?<GiHamburgerMenu onClick={handleSideBar} className="sm:hidden" size={25} />:

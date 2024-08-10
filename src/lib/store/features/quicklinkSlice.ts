@@ -15,7 +15,8 @@ const initialState: QuickLink = {
   snippetData:snippetData,
   selectedSnippet:null,
   isNewSnippet:false,
-  singleLanguageSelected:null
+  singleLanguageSelected:null,
+  isAddTagOpen:false
 
 
 }
@@ -50,10 +51,13 @@ const quickLinkSlice=createSlice({
           state.isNewSnippet=action.payload
         },
         setAllTag:(state,action)=>{
-          state.AllTags=[{_id:String(state.AllTags.length+1),name:action.payload},...state.AllTags]
+          state.AllTags=[state.AllTags[0],{_id:String(state.AllTags.length+1),name:action.payload,isSelected:false},...state.AllTags.slice(1)]
         },
         setSingleLanguageSelected:(state,action)=>{
           state.singleLanguageSelected=action.payload
+        },
+        setAddTagOpen:(state,action)=>{
+          state.isAddTagOpen=action.payload
         }
     }
 })

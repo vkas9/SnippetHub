@@ -15,7 +15,8 @@ export interface SnippetType{
 
 export interface tagType{
     _id:string;
-    name:string
+    name:string;
+    isSelected:boolean
 }
 
 
@@ -52,7 +53,8 @@ export interface QuickLink {
     snippetData:SnippetType[],
     selectedSnippet:SnippetType|null,
     isNewSnippet:boolean,
-    singleLanguageSelected:languageType|null
+    singleLanguageSelected:languageType|null,
+    isAddTagOpen:boolean
     
   
     }

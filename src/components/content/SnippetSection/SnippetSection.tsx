@@ -9,7 +9,13 @@ import { FaHeart } from "react-icons/fa";
 import { SnippetType } from "@/Types/type.snippetData";
 import Editor from "@monaco-editor/react";
 import { FaTrashRestore } from "react-icons/fa";
-
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 const SnippetSection = () => {
   const {
     isSnippetOpen: isOpen,
@@ -104,7 +110,7 @@ const SnippetSection = () => {
     <div className="  flex flex-wrap gap-2">
       {[...filtererdAllSnippets].reverse().map((item, index) => (
         <div
-          key={item.id}
+          key={item?.id}
           className={`max-sm:w-full ${
             isOpen && items[0]?.isSelected ? "w-full" : "w-[320px]"
           }  p-2 flex flex-col justify-between max-h-[500px]  bg-white/10 rounded-lg`}
@@ -112,8 +118,13 @@ const SnippetSection = () => {
           <div>
             <div className="flex text-lg  gap-5 justify-between">
               <span
-                onClick={() => handleSnippetOpen(item)}
-                className="font-bold truncate w-full hover:text-red-500 text-2xl hover:cursor-pointer"
+                onClick={(e) =>{
+                  e.stopPropagation()
+                  if(!item?.isTrashed){
+                    handleSnippetOpen(item)
+                  }
+                }}
+                className={`font-bold truncate w-full ${!item?.isTrashed?" active:text-red-500  hover:cursor-pointer sm:hover:text-red-500 ":"hover:cursor-default"} text-2xl `}
               >
                 {item?.title}
               </span>
@@ -134,6 +145,22 @@ const SnippetSection = () => {
             </div>
 
             {/* tags list */}
+            <div className="w-full flex  mt-3 rounded-md items-center p-2 overflow-x-auto h-fit">
+            <Carousel className="w-full rounded-md overflow-hidden">
+              <CarouselContent className="flex pl-4   gap-2">
+              {item?.tags.map((tagitem, index) => (
+                <CarouselItem
+                  key={index}
+                  className=" bg-white/10 whitespace-nowrap rounded-md px-3 text-white/60  "
+                >
+                  {tagitem.name}
+                </CarouselItem>
+              ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
+
+{/* 
             <div className="flex mt-3 items-center truncate gap-1">
               {item?.tags.map((tagitem, index) => (
                 <span
@@ -143,7 +170,7 @@ const SnippetSection = () => {
                   {tagitem.name}
                 </span>
               ))}
-            </div>
+            </div> */}
 
             {/* code block */}
 
@@ -171,7 +198,7 @@ const SnippetSection = () => {
               onClick={() => handleTrash(item.id)}
               className={ `${item?.isTrashed?"sm:hover:text-green-500 active:text-green-500":"sm:hover:text-red-500 active:text-red-500"}  active:bg-white/10 sm:hover:bg-white/10 p-2 rounded-full transition-all duration-100`}
             >
-              {item?.isTrashed ? <FaTrashRestore /> : <FaTrash />}
+              {item?.isTrashed ? <FaTrashRestore className="sm:hover:animate-bounce " /> : <FaTrash className="sm:hover:animate-bounce " />}
             </span>
           </div>
         </div>

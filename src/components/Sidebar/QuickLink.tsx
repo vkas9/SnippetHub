@@ -30,11 +30,11 @@ const QuickLink = () => {
                         key={item.id}
                         onClick={() => handleLink(item.id, item.link)}
                         onMouseEnter={() => handleMouseEnter(item.link)}
-                        className={`flex items-center gap-1 hover:bg-white/10 ${item.isSelected ? "bg-white/10" : ""} transition-all duration-10 justify-between p-2 rounded-md cursor-pointer`}
+                        className={`flex items-center gap-1  hover:bg-white/10 ${item.isSelected ? "bg-white/10" : ""} transition-all duration-10 justify-between p-2 rounded-md cursor-pointer`}
                     >
                         <div className='flex items-center gap-1'>
                             <item.icon />
-                            <span>{item?.title}</span>
+                            <span className='whitespace-nowrap'>{item?.title}</span>
                         </div>
                         {item.title === "All Snippets" && <span className='text-white/30 text-sm'>{filteredAllSnippets?.length}</span>}
                         {item.title === "Favorites" && <span className='text-white/30 text-sm'>{filteredAllFavoritesSnippets?.length}</span>}

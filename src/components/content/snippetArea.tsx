@@ -12,7 +12,7 @@ const SnippetArea = () => {
   );
   const filteredAllSnippets = snippetData?.filter((item) => item?.isTrashed === false);
   return (
-    <div className=" flex w-full sm:w-[calc(100vw-200px)] bg-gradient-to-br  from-[#030836]/70 to-transparent p-2   gap-2 ">
+    <div className=" flex w-full max-sm:flex-col sm:w-[calc(100vw-200px)] bg-gradient-to-br  from-[#030836]/70 to-transparent p-2   gap-2 ">
       <div
         className={`${
           isOpen ? `${isMobileView ? "w-full" : "w-[40%]"}` : "w-full"

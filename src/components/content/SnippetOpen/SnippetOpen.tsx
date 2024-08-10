@@ -10,7 +10,13 @@ import { Editor } from "@monaco-editor/react";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { languages } from "@/constants/languages";
-
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 const SnippetOpen = () => {
   const {
     isSnippetOpen,
@@ -55,7 +61,7 @@ const SnippetOpen = () => {
       <div
         className={`p-3 rounded-lg ${
           isMobileView
-            ? "absolute w-[90%] z-20 bg-white/10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            ? "absolute w-[90%] z-20 bg-[#393a3b] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             : " overflow-y-auto h-[calc(100vh-76px)]  w-full bg-white/10"
         } ${isSnippetOpen ? "block" : "hidden"}`}
       >
@@ -84,11 +90,15 @@ export const SnippetHeader = ({
   );
   const [isTagMenuOpen, setTagMenuOpen] = useState(false);
   const dispatch = useAppDispatch();
-
+  const inputRef=useRef<HTMLInputElement>(null)
+  useEffect(()=>{
+    inputRef?.current?.focus()
+  },[isSnippetOpen])
   const onUpdateTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newSingleSnippet = { ...singleSnippet, title: event.target.value };
     
 
+   
     // Dispatch action to update the snippet data in the store
     dispatch(quickLinkAction.setSnippetData(
       snippetData.map(item =>
@@ -126,9 +136,11 @@ export const SnippetHeader = ({
             <span className="font-bold">Title: </span>
 
             <input
+             
               onChange={onUpdateTitle}
               placeholder="New Title..."
               value={singleSnippet.title}
+              ref={inputRef}
               className="outline-none bg-white/10 max-sm:w-full w-full p-2 rounded-md"
             />
           </div>
@@ -148,7 +160,34 @@ export const SnippetHeader = ({
 
         <div className=" relative flex items-center gap-2">
           <span className="font-bold">Tags: </span>
-          <div className="flex  items-center truncate gap-1">
+          <div ref={languageRef} className="">
+              <AiOutlinePlus
+                onClick={() => setTagMenuOpen(!isTagMenuOpen)}
+                className="bg-white/10 rounded-md px-1 hover:animate-none hover:cursor-pointer w-7 h-7 "
+              />
+              {isTagMenuOpen && <TagMenu singleSnippet={singleSnippet} />}
+             
+            </div>
+            <div className="bg-white/20 rounded-full ml-1 h-[40px] w-[1px] "></div>
+
+
+          <div className="w-full flex  rounded-md items-center p-2 overflow-x-auto h-fit">
+            <Carousel className="w-full rounded-md overflow-hidden">
+              <CarouselContent className="flex pl-4   gap-2">
+              {singleSnippet.tags.map((tagitem, index) => (
+              <CarouselItem
+                key={index}
+                className=" bg-white/10 whitespace-nowrap rounded-md px-3 text-white/60  "
+              >
+                {tagitem.name}
+              </CarouselItem>
+            ))}
+              </CarouselContent>
+            </Carousel>
+          </div>
+
+
+          {/* <div className="flex  items-center truncate gap-1">
             {singleSnippet.tags.map((tagitem, index) => (
               <span
                 key={index}
@@ -164,11 +203,8 @@ export const SnippetHeader = ({
               />
               {isTagMenuOpen && <TagMenu singleSnippet={singleSnippet} />}
             </div>
-          </div>
+          </div> */}
         </div>
-
-        {/* description */}
-        <Description />
         {/* code */}
         <Code singleSnippet={singleSnippet} />
       </div>
@@ -196,8 +232,8 @@ export const TagMenu = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
   };
 
   return (
-    <ul className="absolute top-10 bg-[#393a3b] z-20 flex flex-col gap-2 w-[30%]  py-3 px-6 h-[200px] overflow-y-auto rounded-md ">
-      {AllTags.map((item) => (
+    <ul className="absolute top-10 bg-[#393a3b] z-20 flex flex-col gap-2 w-[30%]  py-3  h-[200px] overflow-y-auto rounded-md ">
+      {AllTags.slice(1).map((item) => (
         <li
           onClick={() => {
             onTagUpdate(item);
@@ -209,7 +245,7 @@ export const TagMenu = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
             )
               ? "text-white/30 select-none pointer-events-none "
               : ""
-          } capitalize  hover:bg-white/10 px-2 w-full hover:cursor-pointer rounded-md `}
+          } capitalize whitespace-nowrap text-center hover:bg-white/10 px-2 w-full hover:cursor-pointer  `}
         >
           {item.name}
         </li>
@@ -218,21 +254,7 @@ export const TagMenu = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
   );
 };
 
-export const Description = () => {
-  return (
-    <div className="flex  gap-2">
-      <label className="font-bold " htmlFor="description">
-        Desc:{" "}
-      </label>
 
-      <textarea
-        id="description"
-        placeholder="New Description..."
-        className="bg-white/10 outline-none max-sm:w-full p-2 rounded-md "
-      ></textarea>
-    </div>
-  );
-};
 
 export const Code = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
   const [isLanguageModalOpen, setLanguageModalOpen] = useState(false);

@@ -10,8 +10,8 @@ export const snippetData = [
     title: "this is a note",
     isFavorite: false,
     tags: [
-      { _id: "1", name: "tag1" },
-      { _id: "2", name: "tag2" },
+      { _id: "1", name: "tag1",isSelected:false },
+      { _id: "2", name: "tag2",isSelected:false  },
     ],
     description: "this is a description",
     code: ` const handleFavorite = (item: SnippetType) => {
@@ -33,8 +33,8 @@ export const snippetData = [
     title: "this is a note",
     isFavorite: false,
     tags: [
-      { _id: "1", name: "tag1" },
-      { _id: "2", name: "tag2" },
+      { _id: "1", name: "tag1",isSelected:false  },
+      { _id: "2", name: "tag2",isSelected:false  },
     ],
     description: "this is a description",
     code: `const handleFavorite = (item: SnippetType) => {
