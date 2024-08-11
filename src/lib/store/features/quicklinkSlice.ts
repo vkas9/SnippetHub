@@ -4,19 +4,23 @@ import { createSlice } from "@reduxjs/toolkit";
 import {snippetData} from "../../../../src/constants/SnippetData"
 import {Tags} from "../../../../src/constants/Tags"
 
-
+import { v4 as uuidv4 } from 'uuid';
 
 const initialState: QuickLink = {
   items:quicklinks,
   OpenClose:false,
+   ClerkUserId:"",
   isSnippetOpen:false,
   isMobileView:false,
   AllTags:Tags,
   snippetData:snippetData,
   selectedSnippet:null,
+  tagsClicked:[],
   isNewSnippet:false,
   singleLanguageSelected:null,
-  isAddTagOpen:false
+  isAddTagOpen:false,
+  filtererdAllSnippets:[],
+ 
 
 
 }
@@ -26,9 +30,9 @@ const quickLinkSlice=createSlice({
     initialState,
     reducers:{
         setQuickLink:(state,action)=>{
-          const id = action.payload;
+          const _id = action.payload;
           state.items = state.items.map((item) =>
-            item.id === id ? {...item, isSelected: true } : { ...item, isSelected: false }
+            item._id === _id ? {...item, isSelected: true } : { ...item, isSelected: false }
           );
             
         },
@@ -50,15 +54,24 @@ const quickLinkSlice=createSlice({
         setIsNewSnippet:(state,action)=>{
           state.isNewSnippet=action.payload
         },
+        setClerkUserId:(state,action)=>{
+          state.ClerkUserId=action.payload
+        },
         setAllTag:(state,action)=>{
-          state.AllTags=[state.AllTags[0],{_id:String(state.AllTags.length+1),name:action.payload,isSelected:false},...state.AllTags.slice(1)]
+          state.AllTags=[state.AllTags[0],{_id:uuidv4(),name:action.payload.tagName,clerkUserId:action.payload.ClerkUserId,isSelected:false},...state.AllTags.slice(1)]
         },
         setSingleLanguageSelected:(state,action)=>{
           state.singleLanguageSelected=action.payload
         },
         setAddTagOpen:(state,action)=>{
           state.isAddTagOpen=action.payload
-        }
+        },
+        setTagsClicked:(state,action)=>{
+          state.tagsClicked=action.payload
+        },
+        setFiltererdAllSnippets:(state,action)=>{
+          state.filtererdAllSnippets=action.payload
+        }        
     }
 })
 export const quickLinkAction = quickLinkSlice.actions;

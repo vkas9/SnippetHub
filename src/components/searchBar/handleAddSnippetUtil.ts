@@ -1,21 +1,26 @@
+"use client"
 import { FaJava } from "react-icons/fa";
 import formatDate from "../content/SnippetSection/formatDate";
 import { quickLinkAction } from "@/lib/store/features/quicklinkSlice";
 import { v4 as uuidv4 } from 'uuid';
-export const handleAddSnippet = async (dispatch, router, snippetData) => {
+import { useAppSelector } from "@/lib/store/hooks";
+import {languageType, SnippetType} from "../../Types/type.snippetData"
+export const handleAddSnippet = async (dispatch:any, router:any, snippetData:SnippetType[],ClerkUserId:string,items:languageType[]) => {
   // Navigate first
   await dispatch(quickLinkAction.setQuickLink("1"));
   await router.push("/snippets/all-snippets");
 
   // Then dispatch actions
   const newSingleSnippet = {
-    id: uuidv4(),
+    _id: uuidv4(),
+
+    clerkUserId:ClerkUserId ||"",
     title: "",
     isFavorite: false,
     tags: [],
     description: "",
     code: ``,
-    language: { id: "1", title: "Java", icon: FaJava, isSelected: false },
+    language:{...items[0]} ,
     createdAt: formatDate(String(new Date())),
     isTrashed: false,
   };

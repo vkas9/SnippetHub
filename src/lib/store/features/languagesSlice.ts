@@ -18,9 +18,9 @@ const languagesSlice=createSlice({
     initialState,
     reducers:{
         setLanguages:(state,action)=>{
-          const id=action.payload;
+          const _id=action.payload;
           state.items=state.items.map((item)=>
-            item.id===id?{...item,isSelected:true}:{...item,isSelected:false}
+            item?._id===_id?{...item,isSelected:true}:{...item,isSelected:false}
           )
             
         }

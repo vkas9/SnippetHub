@@ -8,19 +8,20 @@ import formatDate from "../content/SnippetSection/formatDate";
 import { useRouter } from "next/navigation";
 import {handleAddSnippet} from "./handleAddSnippetUtil"
 const AddSnippet = () => {
-  const { snippetData, isSnippetOpen } = useAppSelector(
+  const { snippetData, isSnippetOpen,ClerkUserId } = useAppSelector(
     (state) => state.quicklink
   );
   const dispatch = useAppDispatch();
   const router = useRouter();
 
+  const{items}= useAppSelector((state)=>state.language)
  
 
   return (
     <div
       onClick={() => {
         if (!isSnippetOpen) {
-          handleAddSnippet(dispatch, router, snippetData) 
+          handleAddSnippet(dispatch, router, snippetData,ClerkUserId,items) 
         }
       }}
       className={`h-full px-2 gap-1 md:gap-2 absolute right-0 transition-all duration-100 top-0 ${

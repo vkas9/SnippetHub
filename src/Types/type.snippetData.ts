@@ -1,7 +1,7 @@
 import { IconType } from "react-icons";
 
 export interface SnippetType{
-    id:string;
+    _id:string;
     title:string;
     isFavorite:boolean;
     tags:tagType[];
@@ -15,19 +15,20 @@ export interface SnippetType{
 export interface tagType{
     _id:string;
     name:string;
+    clerkUserId:string
     isSelected:boolean
 }
 
 
 
 export interface languageType{
-    id:string;
+    _id:string;
     title:string;
     icon:IconType;
     isSelected: boolean;
 }
 export interface linkType{
-    id: string;
+    _id: string;
     isSelected: boolean;
     title: string;
     icon: IconType;
@@ -53,7 +54,12 @@ export interface QuickLink {
     selectedSnippet:SnippetType|null,
     isNewSnippet:boolean,
     singleLanguageSelected:languageType|null,
-    isAddTagOpen:boolean
+    isAddTagOpen:boolean,
+    tagsClicked:string[],
+    filtererdAllSnippets:SnippetType[],
+    ClerkUserId:string
     
   
     }
+
+

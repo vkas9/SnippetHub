@@ -102,7 +102,7 @@ export const SnippetHeader = ({
     // Dispatch action to update the snippet data in the store
     dispatch(quickLinkAction.setSnippetData(
       snippetData.map(item =>
-        item?.id === singleSnippet?.id ? newSingleSnippet : item
+        item?._id === singleSnippet?._id ? newSingleSnippet : item
       )
     ));
     setSingleSnippet(newSingleSnippet);
@@ -223,7 +223,7 @@ export const TagMenu = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
       tags: [newTag, ...singleSnippet.tags],
     };
     const newSnippetData = snippetData.map((item) => {
-      if (item?.id === singleSnippet?.id) {
+      if (item?._id === singleSnippet?._id) {
         return updatedSnippet;
       }
       return item;
@@ -289,7 +289,7 @@ export const Code = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
     const newCodeSnippet={...singleSnippet,code:code}
     const updatedSnippet=snippetData.map((item)=>{
 
-      if(item.id===singleSnippet.id){
+      if(item?._id===singleSnippet?._id){
         return newCodeSnippet;
       }
       return item;
@@ -344,7 +344,7 @@ export const Language = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
   const onLanguageUpdate = (newLanguage: languageType) => {
     const updatedSnippet = { ...singleSnippet, language: newLanguage };
     const newSnippetData = snippetData.map((item) => {
-      if (item.id === singleSnippet.id) {
+      if (item?._id === singleSnippet?._id) {
         return updatedSnippet;
       }
       return item;
@@ -360,7 +360,7 @@ export const Language = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
       <ul className=" flex flex-col gap-2 overflow-y-auto ">
         {languages.map((item) => (
           <li
-          key={item.id}
+          key={item?._id}
             onClick={() => onLanguageUpdate(item)}
             className={`hover:bg-white/20 ${singleSnippet.language.title.toLowerCase()===item.title.toLowerCase()?"text-white/20 pointer-events-none select-none":""} flex items-center gap-1 p-2 `}
           >

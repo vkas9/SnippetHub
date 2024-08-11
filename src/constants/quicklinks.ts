@@ -5,21 +5,21 @@ import { languageType, linkType } from "@/Types/type.snippetData";
 
 export const quicklinks:linkType[] = [
   {
-    id: '1',
+    _id: '1',
     isSelected: true,
     icon: MdOutlineTextSnippet,
     title: "All Snippets",
     link:"all-snippets"
   },
   {
-    id: '2',
+    _id: '2',
     isSelected: false,
     icon: MdOutlineFavoriteBorder,
     title: "Favorites",
     link:"favorites"
   },
   {
-    id: '3',
+    _id: '3',
     isSelected: false,
     icon: IoTrashOutline ,
     title: "Trash",

@@ -9,15 +9,15 @@ const Languages = () => {
 
   const items=useAppSelector(state=>state.language.items)
   const dispatch=useAppDispatch()
-  const handleLink=(id:any)=>{
-      dispatch(languagesAction.setLanguages(id))
+  const handleLink=(_id:string)=>{
+      dispatch(languagesAction.setLanguages(_id))
   }
   return (
     <>
      {
               items.map((item,index)=>{
-                return <Link key={item?.id} href={"/snippets/all-snippets"}>
-                  <div onClick={()=>handleLink(item.id)} className={`flex items-center gap-1 hover:bg-white/10 ${item.isSelected?"bg-white/10":""} justify-between z p-2 rounded-md`}>
+                return <Link key={item?._id} href={"/snippets/all-snippets"}>
+                  <div onClick={()=>handleLink(item?._id)} className={`flex items-center gap-1 hover:bg-white/10 ${item.isSelected?"bg-white/10":""} justify-between z p-2 rounded-md`}>
                                 <div className='flex items-center gap-2 '>
 
                                 <item.icon/>                                

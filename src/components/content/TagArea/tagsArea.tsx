@@ -13,7 +13,7 @@ import AddTagModal from "./AddTagModal";
 
 
 const TagsArea = () => {
-  const { AllTags,isAddTagOpen,snippetData } = useAppSelector(state => state.quicklink);
+  const { AllTags,isAddTagOpen,snippetData,items,tagsClicked } = useAppSelector(state => state.quicklink);
   const dispatch=useAppDispatch()
   const [tagsSelected,setTagsSelected]=useState<boolean[]>([]);
 
@@ -25,6 +25,37 @@ const TagsArea = () => {
       setTagsSelected(newTagsSelected);
     }
   },[AllTags])
+
+
+  useEffect(()=>{
+const newTagsSelected=Array(AllTags.length).fill(false);
+const newTagsClicked=['All'];
+newTagsSelected[0]=true;
+dispatch(quickLinkAction.setTagsClicked(newTagsClicked));
+setTagsSelected(newTagsSelected);
+  },[items])
+
+
+  useEffect(() => {
+    // Compute the new array of tags
+    const newTagsClicked = AllTags
+        .filter((tag, index) => tagsSelected[index])
+        .map(tag => tag.name);
+
+    // Remove tags that are no longer selected
+    const updatedTags = tagsClicked.filter(tag =>
+      AllTags.some(t => t.name === tag && tagsSelected[AllTags.indexOf(t)])
+    );
+
+    // Add newly selected tags
+    const finalTagsClicked = [
+        ...updatedTags,
+        ...newTagsClicked.filter(tag => !tagsClicked.includes(tag)),
+    ];
+
+    // Dispatch the updated tags array
+    dispatch(quickLinkAction.setTagsClicked(finalTagsClicked));
+}, [tagsSelected]);
 
 
   const handleTagClick=(index:number)=>{

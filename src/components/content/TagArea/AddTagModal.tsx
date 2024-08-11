@@ -146,12 +146,23 @@ interface TagActionButtonsProps {
 
 
 const AddTagButton=({tagName,setErrorMessage}:TagActionButtonsProps)=>{
+
+
+
+  const{ClerkUserId}= useAppSelector((state)=>state.quicklink)
+
+
+
+
   const dispatch=useAppDispatch()
   const { isAddTagOpen,AllTags } = useAppSelector((state) => state.quicklink);
 
 
   const handleAddTagClick = () => {
   const tagNameTrimmed = tagName.trim().toLowerCase();
+
+
+
 
   // validate tag name
   if (isTagNameEmpty(tagNameTrimmed)) {
@@ -166,7 +177,7 @@ const AddTagButton=({tagName,setErrorMessage}:TagActionButtonsProps)=>{
   }
 
   // add new tag
-  addNewTagFunction(tagName, dispatch, isAddTagOpen);
+  addNewTagFunction(tagName, dispatch, isAddTagOpen,ClerkUserId);
 };
 // function to check if tag name is empty
 const isTagNameEmpty = (tagName: string) => tagName.length === 0;

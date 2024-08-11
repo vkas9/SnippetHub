@@ -22,13 +22,13 @@ const SnippetSection = () => {
     snippetData,
     isSnippetOpen,
     selectedSnippet,
-    items,
+    items,tagsClicked
   } = useAppSelector((state) => state.quicklink);
 
   const dispatch = useAppDispatch();
   const handleFavorite = (item: SnippetType) => {
     const updatedSnippetData: SnippetType[] = snippetData.map((snippet) => {
-      if (snippet.id === item.id) {
+      if (snippet?._id === item?._id) {
         return { ...snippet, isFavorite: !snippet.isFavorite };
       }
       return snippet;
@@ -59,6 +59,53 @@ const SnippetSection = () => {
     });
     dispatch(quickLinkAction.setSnippetData(filtererdAllSnippets));
   }, [isOpen]);
+
+useEffect(()=>{
+  if(items[0].isSelected){
+    if(tagsClicked.length===1 && tagsClicked[0]==="All"){
+      setFiltererdAllSnippets(snippetData.filter(snippet=>!snippet.isTrashed));
+      return ;
+    }
+    else if(tagsClicked.length>0){
+      const updatedSnippets=snippetData.filter((snippet)=>{
+        return tagsClicked.every((selectedTag)=>snippet.tags.some((noteTag)=>noteTag.name===selectedTag))
+  
+      }).filter((snip)=>!snip.isTrashed)
+      setFiltererdAllSnippets(updatedSnippets)
+    }
+  }
+
+ 
+
+  if(items[1].isSelected){
+    if(tagsClicked.length==1 && tagsClicked[0]==="All"){
+      setFiltererdAllSnippets(snippetData.filter((snippet)=>snippet?.isFavorite &&snippet?.isTrashed===false ))
+    }
+    else if(tagsClicked.length>0){
+      const updatedSnippets=snippetData.filter((snippet)=>{
+        return tagsClicked.every((selectedTag)=>snippet.tags.some((noteTag)=>noteTag.name===selectedTag))
+  
+      }).filter((snip)=>snip?.isFavorite && snip.isTrashed===false)
+      setFiltererdAllSnippets(updatedSnippets)
+    }
+  }
+
+  if(items[2].isSelected){
+    if(tagsClicked.length===1 && tagsClicked[0]==="All"){
+      setFiltererdAllSnippets(snippetData.filter(snippet=>snippet.isTrashed===true));
+      return ;
+    }
+    else if(tagsClicked.length>0){
+      const updatedSnippets=snippetData.filter((snippet)=>{
+        return tagsClicked.every((selectedTag)=>snippet.tags.some((noteTag)=>noteTag.name===selectedTag))
+  
+      }).filter((snip)=>snip.isTrashed===true)
+      setFiltererdAllSnippets(updatedSnippets)
+    }
+  }
+
+
+},[items,tagsClicked])
 
 
   useEffect(() => {
@@ -91,13 +138,13 @@ const SnippetSection = () => {
     }
   }, [items,snippetData]);
 
-  const handleTrash = (id: string) => {
+  const handleTrash = (_id: string) => {
     const updatedSnippetData = snippetData.map((item) => 
-      item?.id === id ? { ...item, isTrashed: !item.isTrashed } : item
+      item?._id === _id ? { ...item, isTrashed: !item.isTrashed } : item
     );
     dispatch(quickLinkAction.setSnippetData(updatedSnippetData));
   
-    if (selectedSnippet?.id === id) {
+    if (selectedSnippet?._id === _id) {
       dispatch(quickLinkAction.setSnippetOpen(false));
       dispatch(quickLinkAction.setIsNewSnippet(false));
     }
@@ -107,7 +154,7 @@ const SnippetSection = () => {
     <div className="  flex flex-wrap gap-2">
       {[...filtererdAllSnippets].reverse().map((item, index) => (
         <div
-          key={item?.id}
+          key={item?._id}
           className={`max-sm:w-full ${
             isOpen && items[0]?.isSelected ? "w-full" : "w-[320px]"
           }  p-2 flex flex-col justify-between max-h-[500px]  bg-white/10 rounded-lg`}
@@ -192,7 +239,7 @@ const SnippetSection = () => {
               {item?.language.title}
             </div>
             <span
-              onClick={() => handleTrash(item.id)}
+              onClick={() => handleTrash(item._id)}
               className={ `${item?.isTrashed?"sm:hover:text-green-500 active:text-green-500":"sm:hover:text-red-500 active:text-red-500"}  active:bg-white/10 sm:hover:bg-white/10 p-2 rounded-full transition-all duration-100`}
             >
               {item?.isTrashed ? <FaTrashRestore className=" " /> : <FaTrash className=" " />}
