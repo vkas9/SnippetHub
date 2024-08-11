@@ -6,6 +6,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import SearchBar from "../searchBar/searchBar";
 import AddSnippet from "../searchBar/addSnippet";
 import OpenCloseSidebar from "./OpenCloseSidebar";
+import { BackgroundBeams } from "../ui/background-beams";
 
 const Navbar = () => {
   return (
@@ -17,11 +18,13 @@ const Navbar = () => {
        
       <OpenCloseSidebar/>
       </SignedIn>
-        <Link href={"/"}>
+        <Link href={"/"} className="relative">
           <div className="flex   text-lg sm:text-2xl items-center">
             <span className="font-bold ">Snippet</span>
             <span className="font-thin">Hub</span>
           </div>
+
+          <BackgroundBeams />
         </Link>
       </div>
       <SignedIn>
