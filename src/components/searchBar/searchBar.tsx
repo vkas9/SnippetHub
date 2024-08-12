@@ -7,7 +7,6 @@ import { useUser } from '@clerk/nextjs';
 import { quickLinkAction } from '@/lib/store/features/quicklinkSlice';
 import { PlaceholdersAndVanishInput } from "../ui/placeholders-and-vanish-input";
 
-
 const SearchBar = () => {
     const inputRef=useRef<HTMLInputElement>(null);
     const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -18,20 +17,29 @@ const SearchBar = () => {
           }
     }
     const placeholders = [
-      "e.g., Docker",
-     "e.g., bestcode",
-     "e.g., project",
-     "e.g., cyber",
-     "e.g., linux",
-     "e.g., feature code",
+      "Docker...",
+     "bestcode...",
+     "project...",
+     "cyber...",
+     "linux...",
+     "feature code...",
      
     ];
 
     const dispatch=useAppDispatch();
   const {isLoaded,user}= useUser();
+
+
+
+
+
+
+
+
   useEffect(()=>{
     dispatch(quickLinkAction.setClerkUserId(user?.id))
   },[isLoaded,user]);
+
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
