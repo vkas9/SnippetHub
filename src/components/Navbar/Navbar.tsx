@@ -1,3 +1,4 @@
+"use client"
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import React from "react";
@@ -7,8 +8,22 @@ import SearchBar from "../searchBar/searchBar";
 import AddSnippet from "../searchBar/addSnippet";
 import OpenCloseSidebar from "./OpenCloseSidebar";
 import { BackgroundBeams } from "../ui/background-beams";
+import { quickLinkAction } from "@/lib/store/features/quicklinkSlice";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/lib/store/hooks";
 
 const Navbar = () => {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const handleLink = async (id: string, link: string) => {
+    await dispatch(quickLinkAction.setQuickLink(id));
+    router.push(`/snippets/${link}`);
+};
+
+const handleMouseEnter = (link: string) => {
+   
+    router.prefetch(`/snippets/${link}`);
+};
   return (
     <div className="  w-full   flex items-center h-[45px] sm:h-[60px] justify-between py-2 pl-2 sm:pl-6 pr-4 bg-[#030836] mx-auto">
       {/* Home */}
@@ -39,13 +54,14 @@ const Navbar = () => {
 
       <SignedIn>
         <div className=" flex  gap-2 sm:gap-4 items-center ">
-          <Link   
-            href={"/snippets/all-snippets"}
-            className="bg-white/10 max-sm:hidden  flex items-center group gap-3 active:bg-white/20 sm:hover:bg-white/20 transition-all duration-100 py-1 sm:py-2 px-4 sm:px-6 rounded-md font-bold text-md "
+          <div   
+            onClick={() => handleLink("1", "all-snippets")}
+            onMouseEnter={() => handleMouseEnter("all-snippets")}
+            className="bg-white/10 max-sm:hidden hover:cursor-pointer  flex items-center group gap-3 active:bg-white/20 sm:hover:bg-white/20 transition-all duration-100 py-1 sm:py-2 px-4 sm:px-6 rounded-md font-bold text-md "
           >
             <span>My Snippets</span>
             {/* <FaArrowRight className='hidden transition-all duration-200 group-hover:flex'/> */}
-          </Link>
+          </div>
           <div className="h-[40px]  max-sm:hidden  sm:h-[50px] rounded-full min-w-[1px] bg-white/20 "></div>
           <UserButton />
         </div>

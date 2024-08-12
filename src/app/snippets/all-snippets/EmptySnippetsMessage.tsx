@@ -14,7 +14,7 @@ const EmptySnippetsMessage = () => {
   const hasTagsClicked = tagsClicked?.filter((tag) => tag !== "All").length > 0;
   const nonTrashedSnippets = snippetData?.filter((snippet) => !snippet.isTrashed);
   const isNoSnippets = nonTrashedSnippets.length === 0;
-  console.log("hasTagsClicked",hasTagsClicked,"isNoSnippets",isNoSnippets)
+
 
   return (
     <div className="w-full h-full flex items-center justify-center">

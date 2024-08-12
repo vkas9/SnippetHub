@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 const initialState: QuickLink = {
   items:quicklinks,
   OpenClose:false,
-   ClerkUserId:"",
+  ClerkUserId:"",
   isSnippetOpen:false,
   isMobileView:false,
   AllTags:Tags,

@@ -156,7 +156,7 @@ useEffect(()=>{
         <div
           key={item?._id}
           className={`max-sm:w-full ${
-            isOpen && items[0]?.isSelected ? "w-full" : "w-[320px]"
+            isOpen? "w-full" : "w-[320px]"
           }  p-2 flex flex-col justify-between max-h-[500px]  bg-white/10 rounded-lg`}
         >
           <div>
