@@ -24,7 +24,7 @@ const AddSnippet = () => {
           handleAddSnippet(dispatch, router, snippetData,ClerkUserId,items) 
         }
       }}
-      className={`h-full px-2 gap-1 md:gap-2 absolute right-0 transition-all duration-100 top-0 ${
+      className={`h-full px-2 gap-1 sm:gap-2 absolute z-20 right-0 transition-all duration-100 top-0 ${
         !isSnippetOpen
           ? "hover:cursor-pointer hover:bg-white/20"
           : "cursor-not-allowed"
