@@ -26,7 +26,7 @@ const SnippetOpen = () => {
     snippetData,
   } = useAppSelector((state) => state.quicklink);
   const dispatch = useAppDispatch();
-  const [singleSnippet, setSingleSnippet] = useState<SnippetType | null>(null);
+  const [singleSnippet, setSingleSnippet] = useState<SnippetType | null>(selectedSnippet);
 
   useEffect(() => {
     if (isSnippetOpen && selectedSnippet) {
@@ -43,6 +43,7 @@ const SnippetOpen = () => {
     }
   }, [singleSnippet]);
 
+  if (!singleSnippet) return null
   return (
     <div className={ `${
       isSnippetOpen ? `${isMobileView ? "" : "w-[60%]"}` : ""
@@ -105,6 +106,8 @@ export const SnippetHeader = ({
         item?._id === singleSnippet?._id ? newSingleSnippet : item
       )
     ));
+  
+    dispatch(quickLinkAction.setSelectedSnippet(newSingleSnippet))
     setSingleSnippet(newSingleSnippet);
   };
   const languageRef = useRef<HTMLDivElement>(null);
@@ -139,7 +142,7 @@ export const SnippetHeader = ({
              
               onChange={onUpdateTitle}
               placeholder="New Title..."
-              value={singleSnippet.title}
+              value={singleSnippet?.title}
               ref={inputRef}
               className="outline-none bg-white/10 max-sm:w-full w-full p-2 rounded-md"
             />
@@ -176,7 +179,7 @@ export const SnippetHeader = ({
           <div className="w-full flex  rounded-md items-center p-2 overflow-x-auto h-fit">
             <Carousel className="w-full rounded-md overflow-hidden">
               <CarouselContent className="flex pl-4   gap-2">
-              {singleSnippet.tags.map((tagitem, index) => (
+              {singleSnippet?.tags?.map((tagitem, index) => (
               <CarouselItem
                 key={index}
                 className=" bg-white/10 whitespace-nowrap rounded-md px-3 text-white/60  "
@@ -220,7 +223,7 @@ export const TagMenu = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
   const onTagUpdate = (newTag: tagType) => {
     const updatedSnippet = {
       ...singleSnippet,
-      tags: [newTag, ...singleSnippet.tags],
+      tags: [newTag, ...singleSnippet?.tags],
     };
     const newSnippetData = snippetData.map((item) => {
       if (item?._id === singleSnippet?._id) {
@@ -242,7 +245,7 @@ export const TagMenu = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
           }}
           key={item._id}
           className={`${
-            singleSnippet.tags.some(
+            singleSnippet?.tags?.some(
               (tag) => tag.name.toLowerCase() === item.name.toLowerCase()
             )
               ? "text-white/30 select-none pointer-events-none "
@@ -315,7 +318,7 @@ export const Code = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
         >
           <div className="flex items-center gap-1">
           <span><singleSnippet.language.icon/></span>
-          <span  className="capitalize ">{singleSnippet.language.title}</span>
+          <span  className="capitalize ">{singleSnippet?.language?.title}</span>
           </div>
           {!isLanguageModalOpen ? (
             <MdKeyboardArrowDown   />
@@ -358,11 +361,11 @@ export const Language = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
   return (
     <div className=" absolute top-10 z-20 bg-[#393a3b] left-0 overflow-hidden rounded-md w-[180px]  ">
       <ul className=" flex flex-col gap-2 overflow-y-auto ">
-        {languages.map((item) => (
+        {languages?.map((item) => (
           <li
           key={item?._id}
             onClick={() => onLanguageUpdate(item)}
-            className={`hover:bg-white/20 ${singleSnippet.language.title.toLowerCase()===item.title.toLowerCase()?"text-white/20 pointer-events-none select-none":""} flex items-center gap-1 p-2 `}
+            className={`hover:bg-white/20 ${singleSnippet?.language?.title.toLowerCase()===item?.title.toLowerCase()?"text-white/20 pointer-events-none select-none":""} flex items-center gap-1 p-2 `}
           >
               <item.icon/>
             {item?.title}

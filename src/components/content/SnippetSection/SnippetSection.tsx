@@ -35,10 +35,14 @@ const SnippetSection = () => {
       
     });
 
-    // console.log("item-------.",item)
-    // const updatedSelectedSnippet={...selectedSnippet,isFavorite: !selectedSnippet?.isFavorite};
-    // console.log("updatedSelectedSnippet",updatedSelectedSnippet)
-    // dispatch(quickLinkAction.setSelectedSnippet(updatedSelectedSnippet));
+    
+    if(selectedSnippet){
+      const updatedSelectedSnippet={...selectedSnippet,isFavorite: !selectedSnippet?.isFavorite};
+    // console.log("updatedSelectedSnippet",updatedSelectedSnippet,"selectedSnippet-->",selectedSnippet)
+    dispatch(quickLinkAction.setSelectedSnippet(updatedSelectedSnippet));
+
+    }
+    
 
     dispatch(quickLinkAction.setSnippetData(updatedSnippetData));
   };
