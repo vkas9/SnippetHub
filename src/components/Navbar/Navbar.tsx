@@ -10,10 +10,15 @@ import OpenCloseSidebar from "./OpenCloseSidebar";
 import { BackgroundBeams } from "../ui/background-beams";
 import { quickLinkAction } from "@/lib/store/features/quicklinkSlice";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/lib/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
+
+import UserAuth from "./UserAuth";
+import { DrawerDemo } from "./Popup";
+
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
+  const {isMobileView}= useAppSelector(state=>state.quicklink)
   const router = useRouter();
   const handleLink = async (id: string, link: string) => {
     await dispatch(quickLinkAction.setQuickLink(id));
@@ -47,9 +52,10 @@ const handleMouseEnter = (link: string) => {
       </SignedIn>
       {/*User Auth */}
       <SignedOut>
-        <div className="sm:hidden active:bg-white/10 p-2 transition-all duration-200 rounded-full ">
-          <GiHamburgerMenu size={25} />
+        <div className="sm:hidden">
+        <DrawerDemo isMobileView={isMobileView} />
         </div>
+      
       </SignedOut>
 
       <SignedIn>
@@ -68,20 +74,11 @@ const handleMouseEnter = (link: string) => {
       </SignedIn>
 
       <SignedOut>
-        <div className=" gap-4 hidden sm:flex  ">
-          <Link
-            href={"/user/sign-in"}
-            className="bg-white/10 hover:bg-white/20 transition-all duration-100 py-2 px-6 rounded-md font-bold text-md "
-          >
-            Sign in
-          </Link>
-          <Link
-            href={"/user/sign-up"}
-            className="bg-white/10 hover:bg-white/20 transition-all duration-100 py-2 px-6 rounded-md font-bold text-md "
-          >
-            Sign up
-          </Link>
-        </div>
+        <div className="hidden sm:block">
+
+       
+      <UserAuth/>
+      </div>
       </SignedOut>
     </div>
   );
