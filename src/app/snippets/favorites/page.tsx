@@ -36,7 +36,7 @@ const FavoritesPage = () => {
        
       </div> 
       {
-        items[1]?.isSelected &&  selectedSnippet?.isFavorite ?
+        selectedSnippet?.isFavorite && items[1]?.isSelected ?
 <SnippetOpen />:""
 
 

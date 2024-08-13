@@ -27,12 +27,18 @@ const SnippetSection = () => {
 
   const dispatch = useAppDispatch();
   const handleFavorite = (item: SnippetType) => {
-    const updatedSnippetData: SnippetType[] = snippetData.map((snippet) => {
+    const updatedSnippetData:SnippetType[] = snippetData.map((snippet) => {
       if (snippet?._id === item?._id) {
         return { ...snippet, isFavorite: !snippet.isFavorite };
       }
       return snippet;
+      
     });
+
+    // console.log("item-------.",item)
+    // const updatedSelectedSnippet={...selectedSnippet,isFavorite: !selectedSnippet?.isFavorite};
+    // console.log("updatedSelectedSnippet",updatedSelectedSnippet)
+    // dispatch(quickLinkAction.setSelectedSnippet(updatedSelectedSnippet));
 
     dispatch(quickLinkAction.setSnippetData(updatedSnippetData));
   };
@@ -156,7 +162,7 @@ useEffect(()=>{
         <div
           key={item?._id}
           className={`max-sm:w-full ${
-            isOpen? "w-full" : "w-[320px]"
+            isOpen?items[1]?.isSelected &&!selectedSnippet?.isFavorite ?"w-[320px]":"w-full"  : "w-[320px]"
           }  p-2 flex flex-col justify-between max-h-[500px]  bg-white/10 rounded-lg`}
         >
           <div>
