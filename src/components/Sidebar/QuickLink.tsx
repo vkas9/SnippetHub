@@ -30,7 +30,7 @@ const QuickLink = () => {
                         key={item._id}
                         onClick={() => handleLink(item._id, item.link)}
                         onMouseEnter={() => handleMouseEnter(item.link)}
-                        className={`flex items-center gap-1  hover:bg-white/10 ${item.isSelected ? "bg-white/10" : ""} transition-all duration-10 justify-between p-2 rounded-md cursor-pointer`}
+                        className={`flex items-center gap-1  hover:bg-white/10 ${item.isSelected ? "bg-white/10" : ""} transition-all duration-100 justify-between p-2 rounded-md cursor-pointer`}
                     >
                         <div className='flex items-center gap-1'>
                             <item.icon />

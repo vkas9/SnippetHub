@@ -7,7 +7,7 @@ import React from "react";
 
 const EmptySnippetsMessage = () => {
   const { snippetData, isSnippetOpen, tagsClicked,ClerkUserId } = useAppSelector((state) => state.quicklink);
-  const{items}= useAppSelector((state)=>state.language)
+  const{AllLanguage:items}= useAppSelector((state)=>state.language)
   const dispatch = useAppDispatch();
   const router = useRouter();
 

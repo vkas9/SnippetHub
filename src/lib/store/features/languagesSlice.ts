@@ -1,16 +1,15 @@
 import { languages } from "@/constants/languages";
-import { languageType } from "@/Types/type.snippetData";
+import { language, languageType } from "@/Types/type.snippetData";
 import { createSlice } from "@reduxjs/toolkit";
 import React from "react";
 
 
 
-export interface language {
-  items:languageType[]
-  }
+
 
 const initialState: language = {
-  items:languages
+  AllLanguage:languages,
+  LanguageCounter:[]
 }
 
 const languagesSlice=createSlice({
@@ -19,12 +18,16 @@ const languagesSlice=createSlice({
     reducers:{
         setLanguages:(state,action)=>{
           const _id=action.payload;
-          state.items=state.items.map((item)=>
+          state.AllLanguage=state.AllLanguage.map((item)=>
             item?._id===_id?{...item,isSelected:true}:{...item,isSelected:false}
           )
             
+        },
+        setLanguageCounter:(state,action)=>{
+          state.LanguageCounter=action.payload
         }
-    }
+    },
+    
 })
 
 export const languagesAction=languagesSlice.actions;

@@ -18,7 +18,7 @@ import { DrawerDemo } from "./Popup";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
-  const {isMobileView}= useAppSelector(state=>state.quicklink)
+  const {isMobileView,items}= useAppSelector(state=>state.quicklink)
   const router = useRouter();
   const handleLink = async (id: string, link: string) => {
     await dispatch(quickLinkAction.setQuickLink(id));
@@ -30,7 +30,9 @@ const handleMouseEnter = (link: string) => {
     router.prefetch(`/snippets/${link}`);
 };
   return (
-    <div className="  w-full   flex items-center h-[45px] sm:h-[60px] justify-between py-2 pl-2 sm:pl-6 pr-4 bg-[#030836] mx-auto">
+    <div className={`  w-full   flex items-center h-[45px] sm:h-[60px] justify-between py-2 pl-2 sm:pl-6 pr-4 ${
+      items[2].isSelected ? "bg-red-500/10" : "bg-[#030836]"
+    } bg-[#030836] mx-auto`}>
       {/* Home */}
       <div className=" flex items-center gap-2 ">
         <SignedIn>

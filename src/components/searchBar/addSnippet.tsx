@@ -16,7 +16,7 @@ const AddSnippet = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const { items } = useAppSelector((state) => state.language);
+  const { AllLanguage:items } = useAppSelector((state) => state.language);
 
   return (
     <div

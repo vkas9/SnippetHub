@@ -26,7 +26,7 @@ const config: Config = {
   theme: {
     extend: {
       animation: {
-        shimmer: "shimmer 8s infinite",
+        shimmer: "shimmer 4s infinite",
       },
       keyframes: {
         shimmer: {

@@ -42,6 +42,14 @@ export interface link{
     icon: IconType;
   }
 
+  export interface LanguageCounterType{
+    title:string;
+    count:number
+    _id:string;
+    icon:IconType;
+    isSelected: boolean;
+  }
+
 
   
 export interface QuickLink {
@@ -60,6 +68,14 @@ export interface QuickLink {
     ClerkUserId:string
     
   
+    }
+
+
+    
+export interface language {
+    AllLanguage:languageType[],
+    LanguageCounter:LanguageCounterType[]
+    
     }
 
 
