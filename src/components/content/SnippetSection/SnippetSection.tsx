@@ -36,7 +36,7 @@ const SnippetSection = () => {
     });
 
     
-    if(selectedSnippet){
+    if(selectedSnippet && item?._id===selectedSnippet._id){
       const updatedSelectedSnippet={...selectedSnippet,isFavorite: !selectedSnippet?.isFavorite};
     // console.log("updatedSelectedSnippet",updatedSelectedSnippet,"selectedSnippet-->",selectedSnippet)
     dispatch(quickLinkAction.setSelectedSnippet(updatedSelectedSnippet));
