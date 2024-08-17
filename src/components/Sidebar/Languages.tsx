@@ -21,7 +21,7 @@ const Languages = () => {
           ))
         : LanguageCounter?.map((item, index) => {
             return (
-              <Link key={item._id} href={"/snippets/all-snippets"}>
+              <div key={item._id}>
                 <div
                   className={`flex items-center gap-1 hover:bg-white/10 ${
                     item.isSelected ? "bg-white/10" : ""
@@ -33,7 +33,7 @@ const Languages = () => {
                   </div>
                   <span className="text-white/30 text-sm">{item?.count}</span>
                 </div>
-              </Link>
+              </div>
             );
           })}
     </>

@@ -5,7 +5,9 @@ import { linkType } from '@/Types/type.snippetData'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useMemo } from 'react'
 
-const QuickLink = () => {
+const QuickLink = ({ closeDrawer }:{
+    closeDrawer?:() => void
+}) => {
     const { items, snippetData } = useAppSelector(state => state.quicklink);
     const filteredAllSnippets = snippetData?.filter((item) => item?.isTrashed === false);
     const filteredAllTrashedSnippets = snippetData?.filter((item) => item?.isTrashed === true);
@@ -45,7 +47,9 @@ const QuickLink = () => {
                 return (
                     <div
                         key={item._id}
-                        onClick={() => handleLink(item._id, item.link)}
+                        onClick={() => {handleLink(item._id, item.link);
+                            if(closeDrawer)closeDrawer()
+                        }}
                         onMouseEnter={() => handleMouseEnter(item.link)}
                         className={`flex items-center gap-1  hover:bg-white/10 ${item.isSelected ? "bg-white/10" : ""} transition-all duration-100 justify-between p-2 rounded-md cursor-pointer`}
                     >

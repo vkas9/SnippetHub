@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 
 import UserAuth from "./UserAuth";
 import { DrawerDemo } from "./Popup";
+import SnippetModal from "../content/SnippetOpen/SnippetModal";
 
 
 const Navbar = () => {
@@ -30,15 +31,16 @@ const handleMouseEnter = (link: string) => {
     router.prefetch(`/snippets/${link}`);
 };
   return (
-    <div className={`  w-full   flex items-center h-[45px] sm:h-[60px] justify-between py-2 pl-2 sm:pl-6 pr-4 ${
+    <div className={`  w-full   flex items-center h-[45px] sm:h-[60px] justify-between py-2 sm:pl-6 pr-4 ${
       items[2].isSelected ? "bg-red-500/10" : "bg-[#030836]"
     } bg-[#030836] mx-auto`}>
       {/* Home */}
+      <SnippetModal/>
       <div className=" flex items-center gap-2 ">
         <SignedIn>
 
        
-      <OpenCloseSidebar/>
+ <OpenCloseSidebar isMobileView={isMobileView}/>
       </SignedIn>
         <Link href={"/"} className="relative">
           <div className="flex   text-lg sm:text-2xl items-center">
