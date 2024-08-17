@@ -6,7 +6,7 @@ import { languageType, linkType } from "@/Types/type.snippetData";
 export const quicklinks:linkType[] = [
   {
     _id: '1',
-    isSelected: true,
+    isSelected: false,
     icon: MdOutlineTextSnippet,
     title: "All Snippets",
     link:"all-snippets"
