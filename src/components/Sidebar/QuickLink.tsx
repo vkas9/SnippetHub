@@ -14,20 +14,21 @@ const QuickLink = () => {
     const router = useRouter();
    const pathname= usePathname();
 
-   const updatedQuicklinks: linkType[] = useMemo(() => 
-    items.map(link => ({
-      ...link,
-      isSelected: pathname === `/snippets/${link.link}`,
-    })),
-  [pathname, items]);
+   useEffect(() => {
+    const updatedQuicklinks: linkType[] = items.map(link => ({
+        ...link,
+        isSelected: pathname === `/snippets/${link.link}`,
+    }));
 
-  useEffect(() => {
     const isDifferent = JSON.stringify(items) !== JSON.stringify(updatedQuicklinks);
    
     if (isDifferent) {
         dispatch(quickLinkAction.setQuickLink(updatedQuicklinks));
     }
-}, [dispatch, updatedQuicklinks, items]);
+}, []); 
+
+
+
     const handleLink = async (id: any, link: string) => {
         await dispatch(quickLinkAction.setQuickLink(id));
         router.push(`/snippets/${link}`);

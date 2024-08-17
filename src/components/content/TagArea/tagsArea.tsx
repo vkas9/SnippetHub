@@ -95,8 +95,8 @@ setTagsSelected(newTagsSelected);
         <Carousel className="w-full rounded-lg overflow-hidden">
           <CarouselContent className="flex pl-4   gap-2">
           {loadingTags ? (
-              Array.from({ length: 5 }).map((_, index) => (
-                <Skeleton key={index} className="w-[40px] h-[25px] rounded-lg" />
+              Array.from({ length: 9 }).map((_, index) => (
+                <Skeleton key={index} className="w-[50px] h-[30px] rounded-lg" />
               ))
             ) : (
               AllTags.map((item, index) => (
