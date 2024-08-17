@@ -17,13 +17,15 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import addSnippetToDB from "@/lib/SnippetDB/addSnippetToDB";
+import formatDate from "../SnippetSection/formatDate";
 const SnippetOpen = () => {
   const {
     isSnippetOpen,
     isMobileView,
     selectedSnippet,
     isNewSnippet,
-    snippetData,
+    snippetData
   } = useAppSelector((state) => state.quicklink);
   const dispatch = useAppDispatch();
   const [singleSnippet, setSingleSnippet] = useState<SnippetType | null>(selectedSnippet);
@@ -35,13 +37,24 @@ const SnippetOpen = () => {
     }
   }, [selectedSnippet, isSnippetOpen]);
 
-  useEffect(() => {
-    if (isNewSnippet &&singleSnippet&& singleSnippet?.title?.trim() !== "") {
+  // useEffect(() => {
+  //   if (isNewSnippet &&singleSnippet&& singleSnippet?.title?.trim() !== "") {
    
-      dispatch(quickLinkAction.setSnippetData([...snippetData, singleSnippet]));
-      dispatch(quickLinkAction.setIsNewSnippet(false));
-    }
-  }, [singleSnippet]);
+  //     dispatch(quickLinkAction.setSnippetData([...snippetData, singleSnippet]));
+  //     dispatch(quickLinkAction.setIsNewSnippet(false));
+  //   }
+  // }, [singleSnippet]);
+
+
+  // useEffect(()=>{
+  //   if(isNewSnippet){
+  //     if(selectedSnippet && selectedSnippet.title!==""){
+  //       addSnippetToDB({selectedSnippet,snippetData,dispatch})
+  //       dispatch(quickLinkAction.setIsNewSnippet(false))
+  //     }
+  //   }
+
+  // },[selectedSnippet])
 
   if (!singleSnippet) return null
   return (
@@ -96,7 +109,7 @@ export const SnippetHeader = ({
     inputRef?.current?.focus()
   },[isSnippetOpen])
   const onUpdateTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newSingleSnippet = { ...singleSnippet, title: event.target.value };
+    const newSingleSnippet = { ...singleSnippet, title: event.target.value,updatedAt: (String(new Date())) };
     
 
    
@@ -223,7 +236,7 @@ export const TagMenu = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
   const onTagUpdate = (newTag: tagType) => {
     const updatedSnippet = {
       ...singleSnippet,
-      tags: [newTag, ...singleSnippet?.tags],
+      tags: [newTag, ...singleSnippet?.tags],updatedAt: (String(new Date()))
     };
     const newSnippetData = snippetData.map((item) => {
       if (item?._id === singleSnippet?._id) {
@@ -289,7 +302,7 @@ export const Code = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
   const dispatch=useAppDispatch()
 
   const handleChange=(code:any)=>{
-    const newCodeSnippet={...singleSnippet,code:code}
+    const newCodeSnippet={...singleSnippet,code:code,updatedAt: (String(new Date()))}
     const updatedSnippet=snippetData.map((item)=>{
 
       if(item?._id===singleSnippet?._id){
@@ -345,7 +358,7 @@ export const Language = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
   const { snippetData } = useAppSelector((state) => state.quicklink);
   const dispatch = useAppDispatch();
   const onLanguageUpdate = (newLanguage: languageType) => {
-    const updatedSnippet = { ...singleSnippet, language: newLanguage };
+    const updatedSnippet = { ...singleSnippet, language: newLanguage,updatedAt: (String(new Date())) };
     const newSnippetData = snippetData.map((item) => {
       if (item?._id === singleSnippet?._id) {
         return updatedSnippet;

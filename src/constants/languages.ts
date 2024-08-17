@@ -7,32 +7,32 @@ import { languageType } from "@/Types/type.snippetData";
 
 export const languages:languageType[] = [
   {
-    _id: "1",
+    _id: "66bd1da9f296f671a15a8689",
     title: "Java",
     icon: FaJava,
     isSelected: false
     
   },
   {
-    _id: "2",
+    _id: "66bd1dfdf296f671a15a868b",
     title: "Python",
     icon: FaPython,
     isSelected: false
   },
   {
-    _id: "3",
+    _id: "66bd1e0cf296f671a15a868d",
     title: "JavaScript",
     icon: IoLogoJavascript,
     isSelected: false
   },
   {
-    _id: "4",
+    _id: "66bd1e14f296f671a15a868f",
     title: "Scala",
     icon: SiScala,
     isSelected: false
   },
   {
-    _id: "5",
+    _id: "66bd1e1ff296f671a15a8691",
     title: "Go",
     icon: FaGolang,
     isSelected: false

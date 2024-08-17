@@ -12,14 +12,16 @@ const initialState: QuickLink = {
   ClerkUserId:"",
   isSnippetOpen:false,
   isMobileView:false,
-  AllTags:Tags,
-  snippetData:snippetData,
+  AllTags:[],
+  snippetData:[],
   selectedSnippet:null,
   tagsClicked:[],
   isNewSnippet:false,
   singleLanguageSelected:null,
   isAddTagOpen:false,
   filtererdAllSnippets:[],
+  loadingSnippets:true,
+  loadingTags:true
 
 
 
@@ -38,7 +40,11 @@ const quickLinkSlice=createSlice({
             
         },
         setSnippetData:(state,action)=>{
-            state.snippetData=action.payload
+          if (typeof action.payload === "function") {
+            state.snippetData = action.payload(state.snippetData);
+          } else {
+            state.snippetData = action.payload;
+          }
         },
         setOpenClose:(state,action)=>{
           state.OpenClose= action.payload
@@ -59,7 +65,18 @@ const quickLinkSlice=createSlice({
           state.ClerkUserId=action.payload
         },
         setAllTag:(state,action)=>{
-          state.AllTags=[state.AllTags[0],{_id:uuidv4(),name:action.payload.tagName,clerkUserId:action.payload.ClerkUserId,isSelected:false},...state.AllTags.slice(1)]
+          if (Array.isArray(action.payload)) {
+            
+            state.AllTags = action.payload
+          } else {
+            const newTag = {
+              _id: action.payload._id|| uuidv4(),
+              name: action.payload.tagName,
+              clerkUserId: action.payload.ClerkUserId,
+              isSelected: false,
+            };
+            state.AllTags = [state.AllTags[0], newTag, ...state.AllTags.slice(1)];
+          }
         },
         setSingleLanguageSelected:(state,action)=>{
           state.singleLanguageSelected=action.payload
@@ -72,7 +89,13 @@ const quickLinkSlice=createSlice({
         },
         setFiltererdAllSnippets:(state,action)=>{
           state.filtererdAllSnippets=action.payload
-        }        
+        } ,
+        setLoadingSnippets:(state,action)=>{
+          state.loadingSnippets=action.payload
+        }      ,
+        setLoadingTags:(state,action)=>{
+          state.loadingTags=action.payload
+        } 
     }
 })
 export const quickLinkAction = quickLinkSlice.actions;

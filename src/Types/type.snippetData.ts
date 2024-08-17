@@ -8,6 +8,7 @@ export interface SnippetType{
     code:string;
     language:languageType;
     createdAt:string;
+    updatedAt:string;
     isTrashed:boolean;
 }
 
@@ -65,7 +66,9 @@ export interface QuickLink {
     isAddTagOpen:boolean,
     tagsClicked:string[],
     filtererdAllSnippets:SnippetType[],
-    ClerkUserId:string
+    ClerkUserId:string,
+    loadingSnippets:boolean,
+    loadingTags:boolean
     
   
     }

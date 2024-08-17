@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import React, { useEffect, useRef, useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
-import { IoLogoJavascript } from "react-icons/io5";
 import { FaHeart } from "react-icons/fa";
 import { SnippetType } from "@/Types/type.snippetData";
 import Editor from "@monaco-editor/react";
@@ -16,6 +15,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import formatDate from "./formatDate";
 const SnippetSection = () => {
   const {
     isSnippetOpen: isOpen,
@@ -154,6 +154,10 @@ useEffect(()=>{
     );
     dispatch(quickLinkAction.setSnippetData(updatedSnippetData));
   
+    const selectedItem = snippetData.find((item) => item._id === _id);
+    if (selectedItem) {
+      dispatch(quickLinkAction.setSelectedSnippet({ ...selectedItem, isTrashed: !selectedItem.isTrashed }));
+    }
     if (selectedSnippet?._id === _id) {
       dispatch(quickLinkAction.setSnippetOpen(false));
       dispatch(quickLinkAction.setIsNewSnippet(false));
@@ -162,7 +166,14 @@ useEffect(()=>{
   
   return (
     <div className="  flex flex-wrap gap-2">
-      {[...filtererdAllSnippets].reverse().map((item, index) => (
+      {
+      
+      
+      
+      
+      
+      
+      [...filtererdAllSnippets].reverse().map((item, index) => (
         <div
           key={item?._id}
           className={`max-sm:w-full ${
@@ -178,7 +189,7 @@ useEffect(()=>{
                     handleSnippetOpen(item)
                   }
                 }}
-                className={`font-bold truncate w-full ${!item?.isTrashed?" active:text-red-500  hover:cursor-pointer sm:hover:text-red-500 ":"hover:cursor-default"} text-2xl `}
+                className={`font-bold truncate w-full ${!item?.isTrashed?" active:text-red-500  hover:cursor-pointer sm:hover:text-red-500 ":"hover:cursor-default"} text-3xl `}
               >
                 {item?.title}
               </span>
@@ -194,8 +205,9 @@ useEffect(()=>{
             </div>
 
             {/* date */}
-            <div className="text-xs mt-2 text-white/60 ">
-              <span className="">{item.createdAt}</span>
+            <div className="text-xs mt-2 font-thin flex flex-col  text-white/40 ">
+              <span className=""> <span className="font-bold "> Updated At: </span> {formatDate(item.updatedAt)} </span>
+              <span className=""><span className="font-bold ">Created At:</span> {formatDate(item.createdAt)} </span>
             </div>
 
             {/* tags list */}
@@ -256,7 +268,9 @@ useEffect(()=>{
             </span>
           </div>
         </div>
-      ))}
+      ))
+      
+      }
     </div>
   );
 };

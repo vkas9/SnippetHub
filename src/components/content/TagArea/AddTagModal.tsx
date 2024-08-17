@@ -157,18 +157,19 @@ const AddTagButton = ({ tagName, setErrorMessage }: TagActionButtonsProps) => {
     allTags.some((tag) => tag.name.trim().toLowerCase() === tagName);
 
   return (
-    <div className="flex max-sm:flex-col-reverse   items-center justify-center sm:justify-end mt-5 gap-2">
-      <button
-        onClick={() => dispatch(quickLinkAction.setAddTagOpen(!isAddTagOpen))}
-        className="bg-white/20 max-sm:w-full font-semibold active:bg-white/30 sm:hover:bg-white/30 px-4 py-2 rounded-md"
-      >
-        Cancel
-      </button>
+    <div className="flex max-sm:flex-col  items-center justify-center sm:justify-end mt-5 gap-2">
+     
       <button
         onClick={handleAddTagClick}
         className="bg-white/20 font-semibold active:bg-white/30 max-sm:w-full sm:hover:bg-white/30 px-4 py-2 rounded-md"
       >
         Add Tag
+      </button>
+      <button
+        onClick={() => dispatch(quickLinkAction.setAddTagOpen(!isAddTagOpen))}
+        className="bg-white/20 max-sm:w-full font-semibold active:bg-white/30 sm:hover:bg-white/30 px-4 py-2 rounded-md"
+      >
+        Cancel
       </button>
     </div>
   );

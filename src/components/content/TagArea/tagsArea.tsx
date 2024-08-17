@@ -1,6 +1,8 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import React, { useEffect, useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton"
+
 import {
   Carousel,
   CarouselContent,
@@ -11,12 +13,14 @@ import {
 import { quickLinkAction } from "@/lib/store/features/quicklinkSlice";
 import AddTagModal from "./AddTagModal";
 
+import { useUser } from "@clerk/nextjs";
+
+
 
 const TagsArea = () => {
-  const { AllTags,isAddTagOpen,snippetData,items,tagsClicked } = useAppSelector(state => state.quicklink);
+  const { AllTags,isAddTagOpen,snippetData,items,tagsClicked,loadingTags } = useAppSelector(state => state.quicklink);
   const dispatch=useAppDispatch()
   const [tagsSelected,setTagsSelected]=useState<boolean[]>([]);
-
 
   useEffect(()=>{
     if(AllTags){
@@ -90,15 +94,21 @@ setTagsSelected(newTagsSelected);
       <div className="w-full flex rounded-xl items-center p-2 overflow-x-auto h-fit">
         <Carousel className="w-full rounded-lg overflow-hidden">
           <CarouselContent className="flex pl-4   gap-2">
-            {AllTags.map((item,index) => (
-              <CarouselItem
-                onClick={()=>handleTagClick(index)}
-                key={item._id}
-                className={`px-2 ${tagsSelected[index]?"bg-white text-black ":"hover:bg-white/20"} hover:cursor-pointer py-1 whitespace-nowrap   rounded-lg   `}
-              >
-                {item.name}
-              </CarouselItem>
-            ))}
+          {loadingTags ? (
+              Array.from({ length: 5 }).map((_, index) => (
+                <Skeleton key={index} className="w-[40px] h-[25px] rounded-lg" />
+              ))
+            ) : (
+              AllTags.map((item, index) => (
+                <CarouselItem
+                  onClick={() => handleTagClick(index)}
+                  key={item._id}
+                  className={`px-2 ${tagsSelected[index] ? "bg-white text-black" : "hover:bg-white/20"} hover:cursor-pointer py-1 whitespace-nowrap rounded-lg`}
+                >
+                  {item.name}
+                </CarouselItem>
+              ))
+            )}
           </CarouselContent>
         </Carousel>
       </div>
