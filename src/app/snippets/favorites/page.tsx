@@ -5,9 +5,10 @@ import { useAppSelector } from '@/lib/store/hooks';
 import React from 'react'
 import EmptyFavoritesMessage from './EmptyFavoritesMessage';
 import SnippetOpen from '@/components/content/SnippetOpen/SnippetOpen';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const FavoritesPage = () => {
-  const { isSnippetOpen: isOpen, isMobileView,snippetData,items,selectedSnippet } = useAppSelector(
+  const { isSnippetOpen: isOpen,loadingSnippets, isMobileView,snippetData,items,selectedSnippet } = useAppSelector(
     
 
     (state) => state.quicklink
@@ -25,6 +26,19 @@ const FavoritesPage = () => {
         <TagsArea />
 
         {
+          loadingSnippets ?(
+            <div className="flex flex-wrap gap-2">
+            
+              {Array.from({ length: 5 }).map((_, index) => (
+                <Skeleton
+                  key={index}
+                  className={`max-sm:w-full ${
+                    isOpen ? (items[1]?.isSelected && !selectedSnippet?.isFavorite ? "min-w-[320px]" : "w-full") : "w-[320px]"
+                  } flex flex-col justify-between min-h-[420px] rounded-lg`}
+                />
+              ))}
+            </div>
+          ):
           filteredAllFavoritesSnippets?.length?
           <SnippetSection />:
 

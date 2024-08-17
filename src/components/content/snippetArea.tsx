@@ -45,7 +45,7 @@ useEffect(()=>{
 
 
   return (
-    <div className={` flex w-full max-sm:flex-col sm:w-[calc(100vw-200px)] bg-gradient-to-br  from-[#030836]/70 to-transparent pl-2 pt-2 pb-2 ${isOpen?"pr-2":""}  gap-2 `}>
+    <div className={` flex w-full max-sm:flex-col sm:w-[calc(100vw-200px)] bg-gradient-to-br  from-[#030836]/70 to-transparent max-sm:pr-2 pl-2 pt-2 pb-2 ${isOpen?"pr-2":""}  gap-2 `}>
       <div
         className={`${
           isOpen ? `${isMobileView ? "w-full" : "w-[40%]"}` : "w-full"

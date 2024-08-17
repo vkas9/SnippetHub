@@ -1,8 +1,9 @@
 "use client"
 import { quickLinkAction } from '@/lib/store/features/quicklinkSlice'
 import { useAppDispatch, useAppSelector } from '@/lib/store/hooks'
-import { useRouter } from 'next/navigation'
-import React from 'react'
+import { linkType } from '@/Types/type.snippetData'
+import { useParams, usePathname, useRouter } from 'next/navigation'
+import React, { useEffect, useMemo } from 'react'
 
 const QuickLink = () => {
     const { items, snippetData } = useAppSelector(state => state.quicklink);
@@ -11,7 +12,22 @@ const QuickLink = () => {
     const filteredAllFavoritesSnippets = snippetData?.filter((item) => item?.isTrashed === false &&item?.isFavorite );
     const dispatch = useAppDispatch();
     const router = useRouter();
+   const pathname= usePathname();
 
+   const updatedQuicklinks: linkType[] = useMemo(() => 
+    items.map(link => ({
+      ...link,
+      isSelected: pathname === `/snippets/${link.link}`,
+    })),
+  [pathname, items]);
+
+  useEffect(() => {
+    const isDifferent = JSON.stringify(items) !== JSON.stringify(updatedQuicklinks);
+   
+    if (isDifferent) {
+        dispatch(quickLinkAction.setQuickLink(updatedQuicklinks));
+    }
+}, [dispatch, updatedQuicklinks, items]);
     const handleLink = async (id: any, link: string) => {
         await dispatch(quickLinkAction.setQuickLink(id));
         router.push(`/snippets/${link}`);

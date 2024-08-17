@@ -33,10 +33,16 @@ const quickLinkSlice=createSlice({
     initialState,
     reducers:{
         setQuickLink:(state,action)=>{
+          if(Array.isArray(action.payload)){
+            state.items=action.payload
+          }
+          else{
+
+          
           const _id = action.payload;
           state.items = state.items.map((item) =>
             item._id === _id ? {...item, isSelected: true } : { ...item, isSelected: false }
-          );
+          );}
             
         },
         setSnippetData:(state,action)=>{
