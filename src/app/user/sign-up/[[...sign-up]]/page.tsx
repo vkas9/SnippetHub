@@ -4,7 +4,7 @@ import React from 'react'
 const Signup = () => {
   return (
     <div className='mx-auto mt-6'>
-      <SignUp/>
+      <SignUp signInForceRedirectUrl={"snippets/all-snippets"} />
     </div>
   )
 }
