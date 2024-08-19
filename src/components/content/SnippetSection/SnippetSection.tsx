@@ -205,7 +205,7 @@ useEffect(()=>{
             </div>
 
             {/* date */}
-            <div className="text-xs mt-2 font-thin flex flex-col  text-white/40 ">
+            <div className="text-xs mt-2 font-normal flex flex-col  text-white/40 ">
               <span className=""> <span className="font-bold "> Updated At: </span> {formatDate(item.updatedAt)} </span>
               <span className=""><span className="font-bold ">Created At:</span> {formatDate(item.createdAt)} </span>
             </div>
