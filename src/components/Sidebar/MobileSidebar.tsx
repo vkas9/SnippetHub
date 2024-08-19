@@ -44,7 +44,7 @@ const MobileSidebar = ({ closeDrawer }:{
           </div>
         </div>
       </div>
-
+      <div className='h-[1px] w-full bg-white/20 rounded-full  shrink-0 '></div>
       <div
         onClick={handleGithub}
         className={`flex items-center gap-1 group hover:text-white hover:bg-white/10  transition-all duration-10 justify-between p-2 rounded-md cursor-pointer`}

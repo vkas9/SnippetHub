@@ -178,7 +178,7 @@ useEffect(()=>{
           key={item?._id}
           className={`max-sm:w-full ${
             isOpen?items[1]?.isSelected &&!selectedSnippet?.isFavorite ?"w-[320px]":"w-full"  : "w-[320px]"
-          }  p-2 flex flex-col justify-between max-h-[500px]  bg-white/10 rounded-lg`}
+          }  p-2 flex flex-col justify-between max-h-[500px] active:bg-white/20 sm:hover:bg-white/20   bg-white/10 rounded-lg`}
         >
           <div>
             <div className="flex text-lg  gap-5 justify-between">
