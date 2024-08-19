@@ -127,7 +127,7 @@ interface TagActionButtonsProps {
 
 const AddTagButton = ({ tagName, setErrorMessage }: TagActionButtonsProps) => {
   const { ClerkUserId } = useAppSelector((state) => state.quicklink);
-
+const [loading,setLoading]=useState(false)
   const dispatch = useAppDispatch();
   const { isAddTagOpen, AllTags } = useAppSelector((state) => state.quicklink);
 
@@ -145,9 +145,9 @@ const AddTagButton = ({ tagName, setErrorMessage }: TagActionButtonsProps) => {
       setErrorMessage("Tag already in use!");
       return;
     }
-
+    
     // add new tag
-    addNewTagFunction(tagName, dispatch, isAddTagOpen, ClerkUserId);
+    addNewTagFunction(tagName, dispatch, isAddTagOpen, ClerkUserId,loading,setLoading);
   };
   // function to check if tag name is empty
   const isTagNameEmpty = (tagName: string) => tagName.length === 0;
@@ -160,10 +160,12 @@ const AddTagButton = ({ tagName, setErrorMessage }: TagActionButtonsProps) => {
     <div className="flex max-sm:flex-col  items-center justify-center sm:justify-end mt-5 gap-2">
      
       <button
+        disabled={loading}
         onClick={handleAddTagClick}
         className="bg-white/20 font-semibold active:bg-white/30 max-sm:w-full sm:hover:bg-white/30 px-4 py-2 rounded-md"
       >
-        Add Tag
+        {!loading?"Add Tag":"Adding..."}
+        
       </button>
       <button
         onClick={() => dispatch(quickLinkAction.setAddTagOpen(!isAddTagOpen))}

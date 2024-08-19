@@ -234,25 +234,49 @@ export const TagMenu = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
   const { AllTags, snippetData } = useAppSelector((state) => state.quicklink);
   const dispatch = useAppDispatch();
   const onTagUpdate = (newTag: tagType) => {
-    const updatedSnippet = {
-      ...singleSnippet,
-      tags: [newTag, ...singleSnippet?.tags],updatedAt: (String(new Date()))
-    };
-    const newSnippetData = snippetData.map((item) => {
-      if (item?._id === singleSnippet?._id) {
-        return updatedSnippet;
-      }
-      return item;
-    });
-
-    dispatch(quickLinkAction.setSelectedSnippet(updatedSnippet));
-    dispatch(quickLinkAction.setSnippetData(newSnippetData));
+    if(singleSnippet.tags.some((obj)=>obj._id===newTag._id)){
+      const updatedAllTags=singleSnippet.tags.filter((item)=>item._id!==newTag._id);
+      const updatedSnippet = {
+        ...singleSnippet,
+        tags:updatedAllTags ,updatedAt: (String(new Date()))
+      };
+      const newSnippetData = snippetData.map((item) => {
+        if (item?._id === singleSnippet?._id) {
+          return updatedSnippet;
+        }
+        return item;
+      });
+      dispatch(quickLinkAction.setSelectedSnippet(updatedSnippet));
+      dispatch(quickLinkAction.setSnippetData(newSnippetData));
+    }
+    else{
+      const updatedSnippet = {
+        ...singleSnippet,
+        tags: [newTag, ...singleSnippet?.tags],updatedAt: (String(new Date()))
+      };
+      
+      const newSnippetData = snippetData.map((item) => {
+        if (item?._id === singleSnippet?._id) {
+          return updatedSnippet;
+        }
+        return item;
+      });
+       dispatch(quickLinkAction.setSelectedSnippet(updatedSnippet));
+       dispatch(quickLinkAction.setSnippetData(newSnippetData));
+  
+    }
+   
+   
+    
+    
   };
 
   return (
     <ul className="absolute top-10 bg-[#393a3b] z-20 flex flex-col gap-2 w-[30%]  py-3  h-[200px] overflow-y-auto rounded-md ">
       {AllTags.slice(1).map((item) => (
         <li
+
+        
           onClick={() => {
             onTagUpdate(item);
           }}
@@ -261,9 +285,9 @@ export const TagMenu = ({ singleSnippet }: { singleSnippet: SnippetType }) => {
             singleSnippet?.tags?.some(
               (tag) => tag.name.toLowerCase() === item.name.toLowerCase()
             )
-              ? "text-white/30 select-none pointer-events-none "
+              ? "text-white/30  "
               : ""
-          } capitalize whitespace-nowrap text-center hover:bg-white/10 px-2 w-full hover:cursor-pointer  `}
+          } whitespace-nowrap text-center hover:bg-white/10 px-2 w-full hover:cursor-pointer  `}
         >
           {item.name}
         </li>
