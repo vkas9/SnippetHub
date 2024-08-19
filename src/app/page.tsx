@@ -22,7 +22,7 @@ export default function Home() {
     <div className="h-full  w-screen ">
       <div className="flex flex-col gap-4 mt-[5rem]  xl:mt-[10rem] items-center justify-center">
         <h1 className=" py-4 max-w-[90rem] pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-white via-white to-gray-500/80 bg-clip-text text-center text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-semibold leading-none text-transparent ">
-        Simplify Code Snippet Management for Developers Everywhere.
+        Store and Organize Your Code Snippets Easily.
         </h1>
 
         <div
