@@ -6,7 +6,9 @@ export default async function createUser(user:any){
         await connectDB();
         console.log(global)
         const isUserExist=await User.findOne({clerkId:user?.clerkId});
+        console.log("isUserExist---------------------------------------------------->",isUserExist)
         if(isUserExist){
+          console.log("user Already exist----------------------------------------------------------------------------------------------------------------------")
           return "user Already exist"
         }
         const newUser = await User.create(user);
