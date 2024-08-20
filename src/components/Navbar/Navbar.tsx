@@ -37,9 +37,9 @@ const Navbar = () => {
     <BlurFade delay={0.25} yOffset={-10} duration={.8} inView>
       <SnippetModal />
       <div
-        className={`  w-full   flex items-center h-[45px] sm:h-[60px] ${!isSignedIn?"pl-2":""} justify-between  py-2 sm:pl-6 pr-4 ${
-          items[2].isSelected ? "bg-red-500/10" : "bg-[#030836]"
-        } bg-[#030836] mx-auto`}
+        className={`  w-full   flex items-center h-[45px] sm:h-[60px] ${!isSignedIn?"pl-2":""} justify-between  bg-gradient-to-br to-transparent py-2 sm:pl-6 pr-4 ${
+          items[2].isSelected ? "from-red-500/10" : "from-[#030836]"
+        }  mx-auto`}
       >
         {/* Home */}
 
