@@ -38,7 +38,7 @@ export default function Home() {
         </BlurFade>
       </div>
       
-      <BlurFade delay={0.25} duration={.8} yOffset={-6} inView>
+      <BlurFade delay={0.25} duration={.8}  inView>
       
       <div className="relative mx-auto mt-[5rem] 2xl:mt-[8rem] w-full rounded-xl overflow-hidden max-w-[80rem]  ">
 
