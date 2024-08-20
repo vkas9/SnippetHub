@@ -11,7 +11,7 @@ import { BackgroundBeams } from "../ui/background-beams";
 import { quickLinkAction } from "@/lib/store/features/quicklinkSlice";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
-
+import BlurFade from "@/components/magicui/blur-fade";
 import UserAuth from "./UserAuth";
 import { DrawerDemo } from "./Popup";
 import SnippetModal from "../content/SnippetOpen/SnippetModal";
@@ -34,6 +34,7 @@ const Navbar = () => {
   if (!isLoaded) return null;
   return (
     <>
+    <BlurFade delay={0.25} yOffset={-10} duration={.8} inView>
       <SnippetModal />
       <div
         className={`  w-full   flex items-center h-[45px] sm:h-[60px] ${!isSignedIn?"pl-2":""} justify-between  py-2 sm:pl-6 pr-4 ${
@@ -86,6 +87,7 @@ const Navbar = () => {
           </div>
         </SignedOut>
       </div>
+      </BlurFade>
     </>
   );
 };
