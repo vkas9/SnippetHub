@@ -27,7 +27,9 @@ const config: Config = {
     extend: {
       animation: {
         shimmer: "shimmer 4s infinite",
-        "border-beam": "border-beam calc(var(--duration)*1s) infinite linear"
+        "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
+        backgroundPositionSpin:
+          "background-position-spin 3000ms infinite alternate",
       },
       keyframes: {
         shimmer: {
@@ -42,6 +44,10 @@ const config: Config = {
           "100%": {
             "offset-distance": "100%",
           },
+        },
+        "background-position-spin": {
+          "0%": { backgroundPosition: "top center" },
+          "100%": { backgroundPosition: "bottom center" },
         },
       },
     },
