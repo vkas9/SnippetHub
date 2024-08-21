@@ -217,7 +217,7 @@ useEffect(()=>{
               {item?.tags.map((tagitem, index) => (
                 <CarouselItem
                   key={index}
-                  className=" bg-white/10 whitespace-nowrap rounded-md px-3 text-white/60  "
+                  className=" bg-white/10 select-none whitespace-nowrap rounded-md px-3 text-white/60  "
                 >
                   {tagitem.name}
                 </CarouselItem>

@@ -9,7 +9,7 @@ import AddSnippet from "../searchBar/addSnippet";
 import OpenCloseSidebar from "./OpenCloseSidebar";
 import { BackgroundBeams } from "../ui/background-beams";
 import { quickLinkAction } from "@/lib/store/features/quicklinkSlice";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/lib/store/hooks";
 import BlurFade from "@/components/magicui/blur-fade";
 import UserAuth from "./UserAuth";
@@ -19,6 +19,8 @@ import SnippetModal from "../content/SnippetOpen/SnippetModal";
 const Navbar = () => {
   const {isSignedIn,isLoaded}=useAuth()
   const dispatch = useAppDispatch();
+  const pathname=usePathname()
+  const isSnippet=pathname.split('/').includes("snippets")
   const { isMobileView, items } = useAppSelector((state) => state.quicklink);
   const router = useRouter();
   const handleLink = async (id: string, link: string) => {
@@ -37,7 +39,7 @@ const Navbar = () => {
     <BlurFade delay={0.25} yOffset={-10} duration={.8} inView>
       <SnippetModal />
       <div
-        className={`  w-full   flex items-center h-[45px] sm:h-[60px] ${!isSignedIn?"pl-2":""} justify-between  bg-gradient-to-br to-transparent py-2 sm:pl-6 pr-4 ${
+        className={`  w-full   flex items-center h-[45px] sm:h-[60px] ${!isSignedIn?"pl-2":""} justify-between ${isSnippet? items[2].isSelected ?"bg-gradient-to-r via-red-500/10":"bg-gradient-to-r via-[#030836]":"bg-gradient-to-br "}  to-transparent py-2 sm:pl-6 pr-4 ${
           items[2].isSelected ? "from-red-500/10" : "from-[#030836]"
         }  mx-auto`}
       >

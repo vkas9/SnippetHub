@@ -103,7 +103,7 @@ setTagsSelected(newTagsSelected);
                 <CarouselItem
                   onClick={() => handleTagClick(index)}
                   key={item._id}
-                  className={`px-2 ${tagsSelected[index] ? "bg-white text-black" : "hover:bg-white/20"} hover:cursor-pointer py-1 whitespace-nowrap rounded-lg`}
+                  className={`px-2 ${tagsSelected[index] ? "bg-white text-black" : "hover:bg-white/20"} select-none hover:cursor-pointer py-1 whitespace-nowrap rounded-lg`}
                 >
                   {item.name}
                 </CarouselItem>
